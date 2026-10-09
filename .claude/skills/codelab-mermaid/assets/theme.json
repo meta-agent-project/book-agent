@@ -1,0 +1,37 @@
+{
+  "_comment": "codelab-mermaid 디자인 — 2026-10-08 시안 B '선만' 고침 3 승인. 값은 강의 앱 디자인 토큰(tokens.md)을 푼 것. 바꾸지 말 것(바꾸려면 사용자에게 먼저 묻는다).",
+  "vars": {
+    "fontFamily": "'Cascadia Mono','Consolas','Pretendard',monospace",
+    "fontSize": "14px",
+    "background": "#ffffff",
+    "primaryColor": "#ffffff",
+    "primaryTextColor": "#111111",
+    "primaryBorderColor": "#111111",
+    "secondaryColor": "#ffffff",
+    "tertiaryColor": "#ffffff",
+    "lineColor": "#111111",
+    "textColor": "#111111",
+    "edgeLabelBackground": "#ffffff",
+    "attributeBackgroundColorOdd": "#ffffff",
+    "attributeBackgroundColorEven": "#ffffff",
+    "noteBkgColor": "#ffffff",
+    "noteBorderColor": "#111111",
+    "noteTextColor": "#111111",
+    "git0": "#111111",
+    "git1": "#555555",
+    "git2": "#8a8a8a",
+    "git3": "#c4c4c4",
+    "gitBranchLabel0": "#ffffff",
+    "gitBranchLabel1": "#ffffff",
+    "gitBranchLabel2": "#ffffff",
+    "gitBranchLabel3": "#111111"
+  },
+  "style": { "strokeWidth": "1px", "radius": "4px", "boldWeight": "700", "minFontSize": "11px" },
+  "secure": ["secure", "securityLevel", "startOnLoad", "maxTextSize", "suppressErrorRendering", "maxEdges", "theme", "themeVariables", "themeCSS", "fontFamily", "altFontFamily", "look", "darkMode", "handDrawnSeed"],
+  "compact": [
+    "  er: { nodeSpacing: 30, rankSpacing: 30, entityPadding: 8, minEntityWidth: 60 }",
+    "  flowchart: { nodeSpacing: 30, rankSpacing: 30 }",
+    "  state: { nodeSpacing: 30, rankSpacing: 30 }"
+  ],
+  "defaultWidth": 760
+}
