@@ -61,6 +61,16 @@
 - 강사 메모: 막히는 지점·비유 요청 없음. 함수 안 변수 선언은 이 장부터 씀(블록 안 const 금지는 if·for 블록에만 남음). 속성 줄임 표기 { name }은 쓰지 않고 name: name
 - 검증: node v24.13.0으로 예제 19개·바꿔 보기 4개·코드 조각 실행. Mermaid 3개 --format none으로 재서 모두 가로(글자 12.3px 이상). 개념 그림 PNG 열어 확인. check-markdown 0건
 
+### 8장. 불변 업데이트로 하는 CRUD
+
+- 상태: 확정 (2026-10-10 codex 초안, 검수 10건 반영, 보고서 .book/review/08장-검수.md)
+- 파일: book/08장-불변-업데이트로-하는-CRUD.md, 개념 그림 book/images/08/nested-update.png(원본 .book/figures/08/nested-update.html)
+- 설명한 개념: CRUD(Create·Read·Update·Delete), 목록의 인덱스와 항목 id의 차이, nextId로 중복되지 않는 번호 부여, 함수가 새 배열을 반환하고 호출한 쪽에서 재할당하는 역할 구분, map으로 한 항목만 객체 복사해 수정, changes 객체로 변경 속성 묶음 받기, 수정하지 않은 객체의 참조 공유, filter로 삭제할 번호와 다른 항목만 남기기, find로 단건 조회, 중첩 객체의 변경 경로에서 바깥 회원과 안쪽 주소를 각각 복사하기, 원본 값·참조 비교로 불변 업데이트 확인
+- 쓴 문법과 API: function 선언문, 고차 함수 안 화살표 콜백, return, let·const, nextId++, [...posts, newPost], { ...post, ...changes }, map, filter, find, forEach, join(", "), ===·!==, 삼항 연산자, 템플릿 리터럴, ?.·??, 단축 속성 city·zipCode, { ...member, address: { ...member.address, city } }
+- 프로젝트 파일과 이름: js-course/chapter08/ add-post.js, update-post.js, delete-post.js, post-crud.js(따라하기), nested-update.js, member-address.js(따라하기), contact-crud.js·like-post.js(연습문제 정답). 데이터: posts[{ id, title, likes }], contacts[{ id, name, phone }], member{ id: "coding01", name: "김코딩", address: { city, zipCode } }. 함수: addPost(posts, newPost), updatePost(posts, id, changes), deletePost(posts, id), printPosts(posts), updateCity(member, city), updateAddress(member, city, zipCode)(바꿔 보기), addContact·findContact·updateContact·deleteContact, likePost(posts, id). 이전 값 이름: beforePosts·beforeMember·beforeContacts, 다음 번호: nextId
+- 강사 메모: 장별 질문은 계획서의 2026-10-10 6~20장 결정으로 대신함. 장부에 없는 6·7장 내용은 계획서에 따라 배운 것으로 전제함(집필 전 book/에는 1~5장만 있었음). 이름 있는 함수는 function, 고차 함수의 콜백은 화살표 함수로 통일함. 추가 함수는 새 게시글 객체를 인수로 받고, 호출한 쪽에서 nextId를 쓰고 ++로 올림. changes에는 id를 넣지 않고 제목·좋아요만 바꾸는 사용 규칙을 밝힘. 좋아요는 원본 속성에 ++를 쓰지 않고 새 객체에 post.likes + 1을 넣음. 중첩은 member.address.city 한 단계만 다룸. 도시만 바꾸는 예제에서는 우편번호를 일부러 유지함을 설명하고 바꿔 보기에서는 도시·우편번호를 함께 갱신함. 확정 절차와 공용 장부 갱신은 수행하지 않음.
+- 검증: Node.js v24.13.0으로 예제 4개·따라하기 2개·바꿔 보기 4개·정답 2개, 모두 12개 실제 실행 및 node --check 통과. 원본 8개는 원고의 실행 결과 전체와 실제 stdout을 일치 검사함. 바꿔 보기 4개는 바탕 실습에 코드 조각을 적용해 변경된 출력 전체를 일치 검사함. 추가 검사에서 원본 데이터 보존, 수정하지 않은 객체의 참조 유지, 수정한 객체·중첩 주소의 참조 분리, 없는 번호 조회·수정·삭제·좋아요, 빈 배열, 삭제 후 다음 번호 이어 쓰기 통과. 실행 파일은 지정 scratchpad/verify/08/에 원고의 파일명 그대로 저장(변형은 variants/ 아래 같은 파일명), manifest.json·verification-results.json·각 .stdout.txt에 증거 저장. 실행 대상 미실행 없음. 기본 문법 4개는 자리표시를 담은 형태 설명이라 실행 대상에서 제외함. 원고의 HTML 실행 예제는 없음. 개념 HTML은 capture-figure.mjs의 Playwright로 열어 760×340, 2배 PNG 캡처 후 직접 열어 글자·테두리·겹침·잘림 확인. Mermaid 2개는 book-mermaid render.mjs --format none으로 실제 렌더링해 측정: 706×67(compact), 701×260(base), 모두 fontPx 14, 가로 배치. 책 원고의 Mermaid 코드 블록은 그대로 유지함. check-markdown 발견 0건. check-code의 추정 경고 8건은 화살표 콜백의 여러 줄 표현식·객체의 마지막 속성에 세미콜론을 붙이라고 제안한 오탐으로 검토함(node --check와 실제 실행 모두 통과하며 해당 위치에 세미콜론을 넣으면 문법이 깨지므로 적용하지 않음). R-1~R-9·MD-1~MD-5 및 계획서 제목·연습문제 일치 확인.
+
 ## 앞으로 미룬 설명
 
 - document.querySelector, textContent → 10장
