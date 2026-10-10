@@ -71,6 +71,16 @@
 - 강사 메모: 계획서의 "2026-10-10 6~20장 결정"으로 장별 질문을 대신함. 이름 있는 함수는 function 선언문으로 씀. 5장 원고의 createProduct(name,price)와 name: name·price: price를 단축 속성으로 이어 설명함. 2장 이름표 비유를 두 이름표와 상자 하나 그림으로 이어 씀. 구조분해 이름 바꾸기·중첩 구조분해·나머지 요소/속성·메서드 단축 문법·structuredClone은 쓰지 않음. 6-6은 공유되는 주소를 직접 바꾸어 확인하는 시연과 안쪽 주소까지 전개하는 예제만 둠. 깊은 복사는 용어만 설명하며 중첩 업데이트 반복 실습은 계획서의 8-4에 남김. HTML 실행 예제 없음. 계획서 제안 없음. 사용자 지시에 따라 공용 장부·과정 설정·계획서·스킬·다른 장 파일은 수정하지 않고 이 파일만 장부 기록 초안으로 저장함
 - 검증: Node.js v24.13.0으로 26회 실행하여 모두 정상 종료와 예상 stdout 일치를 확인함(예제 18개 + 따라하기 1개 + 바꿔 보기 2개 + 정답 2개 + 연습문제 완료 조건 1개 + 기본값 undefined/객체 배열의 얕은 복사 특징 확인 2개). 바꿔 보기 코드 조각 2개는 post-copy.js에 적용해 실행함. 기본 문법 14개는 형태 설명이므로 실행 대상에서 제외함. 실행 대상 미실행 없음. 검증 파일은 scratchpad/verify/06/에 원고 파일명 그대로 저장하고, 변형은 별도 하위 폴더에서 같은 파일명을 유지함. 각 stdout와 execution-report.json, 원고 사본도 저장함. Mermaid 1개는 book-mermaid render.mjs --format none으로 측정(compact, 747×138px, 14px), Playwright에서 실제 렌더링 후 라벨 겹침 0건 확인(mermaid-report.json). Mermaid 코드 블록을 원고에 유지함. 개념 그림 HTML은 capture-figure.mjs(Playwright, 배율 2)로 760×300px 회색 테두리 PNG를 만들고 실제 이미지를 열어 확인함. check-markdown.mjs·check-code.mjs 모두 발견 0건
 
+### 7장. 배열과 불변성
+
+- 상태: 확정 (2026-10-10 codex 초안, 검수 13건 반영, 보고서 .book/review/07장-검수.md)
+- 파일: book/07장-배열과-불변성.md, 개념 그림 book/images/07/immutable-reference.png·slice-range.png(원본 .book/figures/07/immutable-reference.html·slice-range.html)
+- 설명한 개념: 불변성(원본 유지와 새 값 만들기), 이전 참조를 남긴 채 현재 변수 재할당하기, 내용 변경과 참조 변경의 구분, const만으로 불변성을 보장하지 않는 점, forEach의 요소별 콜백 호출과 두 번째 매개변수 index, forEach 반환값 undefined, map의 같은 길이 새 배열과 콜백 반환값, join과 구분자, map으로 태그 문자열 배열을 만들고 join("")으로 잇기, filter로 조건에 맞는 요소 남기기, 메서드 체이닝, find의 첫 일치 요소와 미발견 undefined, ?.와 ??로 안전하게 읽기, slice의 시작 포함·끝 제외·끝 생략·음수 인덱스·빈 범위, slice와 전개 연산자로 중간 삽입, push의 원본 변경·숫자 길이 반환과 전개 연산자의 새 배열 생성 비교, 새 배열 안의 기존 객체 참조 공유
+- 쓴 문법과 API: arr.forEach((item, index) => {}), arr.map((item) => 값), map 블록 콜백의 return, arr.join(", ")·join("")·join(" / "), arr.filter((item) => 조건), filter(...).map(...), arr.find((item) => item.id === id), found?.name ?? 기본값, arr.slice(start, end)·slice(start)·slice(-2)·slice(2, 2), [...arr.slice(0, i), newItem, ...arr.slice(i)], arr.push(newItem)의 반환값, arr = [...arr, newItem], 객체 전개와 grade 덮어쓰기, === 참조 비교, function 선언문과 안쪽 화살표 콜백
+- 프로젝트 파일과 이름: chapter07/immutable.js, for-each.js, map.js, join.js, map-tags.js, filter.js, filter-map.js, find.js, slice.js, slice-insert.js, push.js, spread-add.js(예제 12개), product-list.js·todo-add.js(따라하기), passed-students.js·cart-add.js(연습문제 정답). 주요 이름: member{name,grade}, previousMember, cart, previousCart, products{id,name,price,stock}, availableProducts, availableNames, selectedProduct, missingProduct, selectedId, productLines, prices, discountPrices, names, tags, listHtml, firstProducts, remainingProducts, lastProducts, emptyProducts, insertIndex, newItem, nextCart, baseTodos, pushedTodos, previousPushedTodos, todos, previousTodos, newTodo{id,title,isDone}, printTodos(label, items), students{name,score}, passedNames, cartItems{name,price,quantity}, nextCartItems
+- 강사 메모: 장별 질문은 계획서의 "2026-10-10 6~20장 결정"으로 대신함. 7-1~7-7 제목·번호와 연습문제 제목을 계획서 그대로 유지함. 실행 환경은 문법 장 규칙에 맞춰 단일 .js로 통일함. join은 콘솔에서 태그 문자열을 만드는 데까지 설명하여 DOM API를 새로 쓰지 않음. 이름 있는 함수는 function 선언문, 콜백은 안쪽 화살표 함수로 씀. forEach의 두 번째 매개변수 index는 7-2에서만 소개함. 집필 중 생성된 6장 원고도 읽어 member·cart·얕은 복사 설명과 연속성을 확인함. 계획서 제안 없음. 확정 절차는 진행하지 않음
+- 검증: Node.js v24.13.0으로 예제 12개·따라하기 2개·정답 2개·바꿔 보기 4개·map 블록 코드 조각 1개, 총 21개 실행하고 stdout을 원고 및 변형 기대 결과와 대조하여 전부 일치함. 파일은 scratchpad/verify/07/ 아래 원고 파일명 그대로 저장함(변형은 variants/ 아래 별도 폴더). 실행 로그 *.stdout.txt와 execution-report.json 저장. 실행 대상 HTML 예제는 없음. 개념 그림 HTML 2개는 capture-figure.mjs와 Playwright로 PNG 캡처하고 직접 열어 확인함(760×300, 760×320; 배율 2; 회색 테두리). Mermaid 1개는 book-mermaid render.mjs --format none으로 실제 렌더링·측정: compact, 760×55px, 글자 11.5px, 높이보다 폭이 크고 겹침 없음. Mermaid 코드는 원고에 유지함. check-markdown.mjs 0건, check-code.mjs 0건. 미실행 항목 없음(기본 문법 11개는 형태 예시이므로 실행 대상에서 제외)
+
 ### 8장. 불변 업데이트로 하는 CRUD
 
 - 상태: 확정 (2026-10-10 codex 초안, 검수 10건 반영, 보고서 .book/review/08장-검수.md)
@@ -104,7 +114,7 @@
 - 합계 누적은 += 없이 total = total + 값 꼴로 씀. 2026-10-10 끝까지 쓰지 않기로 확정
 - 객체 리터럴 단축 문법(단축 속성 { name }, 계산된 속성 이름 [key]) → 6장 6-1 (2026-10-10 계획서에 추가). 5장 예제 5-14의 name: name을 6-1 도입 예시로 이어 씀. 6장에서 다룸(makeField 예제)
 - 입력칸 여러 개를 함수 하나로 처리 → 6-1([key]), 6-5({ ...원본, [key]: 값 }), 12-2(e.target.name·value), 13-3(조립). React 모양(setPost, prev)은 쓰지 않고 input 이벤트 + post = { ...post, [e.target.name]: e.target.value } + render로 쓴다(강사 요청). 계획서에 항목마다 "이유" 줄을 둠. 원고 "왜 필요할까"는 그 이유를 따른다
-- slice → 7장 7-6 (concat·splice는 다루지 않음)
+- slice → 7장 7-6 (concat·splice는 다루지 않음). 7장에서 다룸
 - 2026-10-10 계획서 1~5장을 원고에 맞춰 동기화: 실습 이름(1-3, 3-5, 4-2, 5-2 추가분), 원고에서 더 다룬 내용(요소 바꾸기, 합계, 반복문 안 if, 함수 안 변수, 콜백·고차 함수, ?.(), 함수 표현식, ({ })), 5-4·5-5 예시 let → const. 제목·번호·연습문제는 원래 같았음
 - 2026-10-10 6~20장 목차와 규칙을 강사와 장마다 정해 계획서에 반영함. 공통 규칙은 계획서 가정한 것의 "6~20장 결정", 장별 결정은 세부목차에 있다. 바꾸기 전 계획서는 .book/review/backup/syllabus.20261010-pre-batch.md
 - 6~20장 장별 질문(막히는 지점·비유·비중)은 이 결정으로 대신한다. 원고 작성 때 다시 묻지 않는다
