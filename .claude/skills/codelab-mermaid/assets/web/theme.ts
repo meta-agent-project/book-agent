@@ -1,6 +1,6 @@
 import type { MermaidConfig } from "mermaid";
 
-/** 도식 값 — specs/design/components.md "도식" 표의 토큰을 푼 값 (tests/components/diagram-theme.test.ts가 맞춰 본다) */
+/** 도식 값 — references/design.md "값과 CSS 토큰"의 토큰을 푼 값 */
 export const DIAGRAM_VARS = {
   fontFamily: "'Cascadia Mono','Consolas','Pretendard',monospace",
   fontSize: "14px",
@@ -45,9 +45,9 @@ const THEME_CSS = [
 
 const natural = { useMaxWidth: false }; // 원래 크기로 그리고, 줄이기는 읽는 글 폭이 한다
 
-/** mermaid.initialize에 넘기는 설정 — 앱의 모든 도식이 이 하나를 쓴다 (FR-049) */
+/** mermaid.initialize에 넘기는 설정 — 모든 도식이 이 하나를 쓴다 */
 export const DIAGRAM_CONFIG: MermaidConfig = {
-  // 도식 글 안 init · frontmatter가 바꿀 수 없는 설정 — 모양은 하나(FR-049), 안전 모드 유지
+  // 도식 글 안 init · frontmatter가 바꿀 수 없는 설정 — 모양은 하나, 안전 모드 유지
   secure: ["secure", "securityLevel", "startOnLoad", "maxTextSize", "suppressErrorRendering", "maxEdges", "theme", "themeVariables", "themeCSS", "fontFamily", "altFontFamily", "look", "darkMode", "handDrawnSeed"],
   startOnLoad: false,
   securityLevel: "strict",
@@ -56,7 +56,9 @@ export const DIAGRAM_CONFIG: MermaidConfig = {
   fontFamily: DIAGRAM_VARS.fontFamily,
   themeVariables: DIAGRAM_VARS,
   themeCSS: THEME_CSS,
-  flowchart: natural,
+  // 흐름 도식은 직각 배치(ELK — layout.ts가 흐름 도식 글에만 layout: elk). 선은 직선으로 꺾고, 갈래가 있어도 주 흐름은 한 줄
+  flowchart: { ...natural, curve: "linear" },
+  elk: { nodePlacementStrategy: "NETWORK_SIMPLEX" },
   sequence: natural,
   er: natural,
   state: natural,

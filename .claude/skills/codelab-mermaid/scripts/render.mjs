@@ -2,12 +2,13 @@
 // codelab-mermaid 렌더러 — Mermaid를 정해진 디자인 · 배치 규칙으로 PNG/SVG로 그린다.
 //
 // 쓰는 법:
-//   node render.mjs <원고.md | 도식.mmd> [--width 760] [--out <폴더>] [--format png|svg|both] [--scale 2] [--md-out <파일.md>]
+//   node render.mjs <원고.md | 도식.mmd> [--width 760] [--out <폴더>] [--format png|svg|both|none] [--scale 2] [--md-out <파일.md>]
 //   - .md  : 안의 ```mermaid 블록마다 그림 파일을 만들고, --md-out을 주면 블록을 그림 링크로 바꾼 MD를 쓴다
 //   - .mmd : 도식 하나
-//   --width : 그림이 들어갈 폭(px). 앱 읽는 글 760(기본), 책이면 판면 폭
-// 결과(JSON 한 줄씩): 도식 번호 · 배치(base|compact|wrap|flip) · 비율 · 글자 px · 파일 · 실패 이유
-import { mkdirSync, readFileSync, writeFileSync, existsSync, mkdtempSync } from "node:fs";
+//   --width : 그림이 들어갈 폭(px). 웹 읽는 글 760(기본), 책이면 판면 폭
+//   --format none : 그림 파일 없이 재기만 한다(시나리오로 나눌지 판단할 때)
+// 결과(JSON 한 줄씩): 도식 번호 · 배치(base|compact|wrap|flip) · 비율 · 글자 px · 들어갈 폭 · 높이 · 파일 · 실패 이유
+import { mkdirSync, readFileSync, writeFileSync, existsSync, mkdtempSync, readdirSync, statSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { basename, dirname, extname, join, relative, resolve } from "node:path";
 import { createRequire } from "node:module";
@@ -33,19 +34,19 @@ const opt = (name, fallback) => {
 };
 const input = args.find((a, i) => !a.startsWith("--") && !(i > 0 && args[i - 1].startsWith("--")));
 if (!input) {
-  console.error("쓰는 법: node render.mjs <원고.md | 도식.mmd> [--width 760] [--out 폴더] [--format png|svg|both] [--scale 2] [--md-out 파일.md]");
+  console.error("쓰는 법: node render.mjs <원고.md | 도식.mmd> [--width 760] [--out 폴더] [--format png|svg|both|none] [--scale 2] [--md-out 파일.md]");
   process.exit(1);
 }
 
-const theme = JSON.parse(readFileSync(join(root, "assets/theme.json"), "utf8"));
-const width = Number(opt("width", theme.defaultWidth));
+// 기본 폭 = 웹 읽는 글 폭(--content-w)
+const width = Number(opt("width", "760"));
 const format = opt("format", "png");
 const scale = Number(opt("scale", "2"));
 const src = readFileSync(input, "utf8");
 const isMd = /\.(md|markdown)$/i.test(input);
 const base = basename(input, extname(input));
 const outDir = resolve(opt("out", join(dirname(input), `${base}-diagrams`)));
-mkdirSync(outDir, { recursive: true });
+if (format !== "none") mkdirSync(outDir, { recursive: true });
 
 // 도식 목록
 const BLOCK = /^```mermaid[ \t]*\r?\n([\s\S]*?)\r?\n```[ \t]*$/gm;
@@ -56,7 +57,17 @@ if (blocks.length === 0) {
 }
 
 const { chromium } = require(need("playwright"));
-const mermaidJs = need("mermaid/dist/mermaid.min.js");
+need("mermaid");
+need("@mermaid-js/layout-elk/package.json"); // ESM 전용이라 package.json으로 있는지만 본다
+need("elkjs/lib/elk.bundled.js");
+
+// 브라우저 쪽(scripts/browser.ts + assets/web/)을 한 파일로 묶는다 — 고친 파일이 묶음보다 새로우면 다시
+const bundle = join(here, ".build", "browser.js");
+const sources = [join(here, "browser.ts"), ...readdirSync(join(root, "assets/web")).filter((f) => f.endsWith(".ts")).map((f) => join(root, "assets/web", f))];
+if (!existsSync(bundle) || sources.some((f) => statSync(f).mtimeMs > statSync(bundle).mtimeMs)) {
+  const { build } = await import(pathToFileURL(need("esbuild")).href);
+  await build({ entryPoints: [join(here, "browser.ts")], outfile: bundle, bundle: true, format: "iife", platform: "browser", target: "chrome120", logLevel: "error", absWorkingDir: root });
+}
 let fontCss = "";
 try {
   fontCss = require.resolve("pretendard/dist/web/static/pretendard.css");
@@ -73,18 +84,15 @@ writeFileSync(
 ${fontCss ? `<link rel="stylesheet" href="${pathToFileURL(fontCss).href}">` : ""}
 <style>body{margin:0;background:#fff}#host{width:${width}px;padding:8px 0}#host svg{display:block;max-width:100%;height:auto}</style>
 </head><body><div id="host"></div>
-<script src="${pathToFileURL(mermaidJs).href}"></script>
-<script src="${pathToFileURL(join(here, "runtime.js")).href}"></script>
+<script src="${pathToFileURL(bundle).href}"></script>
 </body></html>`,
 );
 
 const browser = await chromium.launch();
 const tab = await browser.newPage({ viewport: { width: width + 40, height: 800 }, deviceScaleFactor: scale });
 await tab.goto(pathToFileURL(page).href);
-await tab.evaluate(async (t) => {
-  await document.fonts.ready;
-  window.codelabMermaid.init(t);
-}, theme);
+await tab.waitForFunction(() => window.metaMermaid);
+await tab.evaluate(() => document.fonts.ready);
 
 const pad = (n) => String(n).padStart(2, "0");
 const results = [];
@@ -95,7 +103,7 @@ for (const [i, b] of blocks.entries()) {
       const host = document.getElementById("host");
       host.innerHTML = "";
       await document.fonts.ready;
-      return window.codelabMermaid.draw(host, code, id);
+      return window.metaMermaid.draw(host, code, id);
     }, { code: b.code, id: `d${i}` });
     const files = [];
     if (format === "svg" || format === "both") {
@@ -114,7 +122,7 @@ for (const [i, b] of blocks.entries()) {
       await tab.locator("#host svg").screenshot({ path: join(outDir, `${name}.png`), omitBackground: false });
       files.push(join(outDir, `${name}.png`));
     }
-    const r = { diagram: i + 1, layout: info.kind, scale: +info.scale.toFixed(3), fontPx: +info.fontPx.toFixed(1), files };
+    const r = { diagram: i + 1, layout: info.kind, scale: +info.scale.toFixed(3), fontPx: +info.fontPx.toFixed(1), width: Math.round(info.width), height: Math.round(info.height), files };
     results.push({ ...r, link: files.find((f) => f.endsWith(".png")) ?? files[0] }); // 책 · 문서 도구는 PNG가 안전
     console.log(JSON.stringify(r));
   } catch (e) {
