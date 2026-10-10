@@ -61,6 +61,16 @@
 - 강사 메모: 막히는 지점·비유 요청 없음. 함수 안 변수 선언은 이 장부터 씀(블록 안 const 금지는 if·for 블록에만 남음). 속성 줄임 표기 { name }은 쓰지 않고 name: name
 - 검증: node v24.13.0으로 예제 19개·바꿔 보기 4개·코드 조각 실행. Mermaid 3개 --format none으로 재서 모두 가로(글자 12.3px 이상). 개념 그림 PNG 열어 확인. check-markdown 0건
 
+### 6장. 구조분해 할당과 전개 연산자
+
+- 상태: 확정 (2026-10-10 codex 초안, 검수 9건 반영, 보고서 .book/review/06장-검수.md)
+- 파일: book/06장-구조분해-할당과-전개-연산자.md, 개념 그림 book/images/06/shared-reference.png(원본 .book/figures/06/shared-reference.html)
+- 설명한 개념: 객체 리터럴, 단축 속성, 계산된 속성 이름, 구조분해 할당, 배열 구조분해(순서·앞쪽 값만 꺼내기·없는 요소는 undefined), 객체 구조분해(이름 기준·필요한 속성만 꺼내기), 단축 속성과 객체 구조분해의 방향 차이, 구조분해 기본값(undefined에만 적용·null/0/false/빈 문자열 유지·원본 속성 추가 없음), 매개변수 구조분해와 속성 기본값, 원시 값 대입, 참조, 객체·배열 대입 시 참조 공유, 객체의 ===는 대상 비교, 전개로 배열·객체 복사와 합치기, 뒤에 쓴 같은 속성의 값이 남는 규칙, 변수로 정한 속성만 바꾼 새 객체, 얕은 복사와 안쪽 객체·배열 공유, 안쪽 객체를 따로 전개하기, 깊은 복사(용어만)
+- 쓴 문법과 API: { name, price, stock: 0 }, { title, content }, { [key]: value }, const [변수1, 변수2] = 배열, const { 속성1, 속성2 } = 객체, const { 속성 = 기본값 } = 객체, function 이름({ 속성, 속성 = 기본값 }) {}, 객체/배열 === 비교, [...배열], [...배열1, ...배열2, 새값], { ...객체 }, { ...객체, 속성: 새값 }, { ...객체1, ...객체2 }, { ...객체, [key]: value }, { ...member, address: { ...member.address, city: "부산" } }. 기존 문법: function 선언문, return, 템플릿 리터럴, 점 표기법, 인덱스 대입, push, console.log
+- 프로젝트 파일과 이름: chapter06/product-shorthand.js, post-shorthand.js, make-field.js, array-destructure.js, object-destructure.js, destructure-default.js, parameter-destructure.js, parameter-destructure-default.js, primitive-value.js, object-reference.js, array-reference.js, array-spread.js, array-merge.js, object-spread.js, object-merge.js, field-spread.js, shallow-copy.js, nested-copy.js(예제 18개), post-copy.js(따라하기), user-summary.js·settings-copy.js(연습문제). 기존 이름 createProduct, formatWithPrice, getSubtotal, member{name,age,grade,address{city,zipCode}}, cart를 이어 씀. 새 이름 makeField(key,value), updateField(post,key,value), formatPost({title,content,author}), post{title,content,tags}, changedPost, updatedPost, firstTag, secondTag, defaults, preferences, settings, updatedSettings
+- 강사 메모: 계획서의 "2026-10-10 6~20장 결정"으로 장별 질문을 대신함. 이름 있는 함수는 function 선언문으로 씀. 5장 원고의 createProduct(name,price)와 name: name·price: price를 단축 속성으로 이어 설명함. 2장 이름표 비유를 두 이름표와 상자 하나 그림으로 이어 씀. 구조분해 이름 바꾸기·중첩 구조분해·나머지 요소/속성·메서드 단축 문법·structuredClone은 쓰지 않음. 6-6은 공유되는 주소를 직접 바꾸어 확인하는 시연과 안쪽 주소까지 전개하는 예제만 둠. 깊은 복사는 용어만 설명하며 중첩 업데이트 반복 실습은 계획서의 8-4에 남김. HTML 실행 예제 없음. 계획서 제안 없음. 사용자 지시에 따라 공용 장부·과정 설정·계획서·스킬·다른 장 파일은 수정하지 않고 이 파일만 장부 기록 초안으로 저장함
+- 검증: Node.js v24.13.0으로 26회 실행하여 모두 정상 종료와 예상 stdout 일치를 확인함(예제 18개 + 따라하기 1개 + 바꿔 보기 2개 + 정답 2개 + 연습문제 완료 조건 1개 + 기본값 undefined/객체 배열의 얕은 복사 특징 확인 2개). 바꿔 보기 코드 조각 2개는 post-copy.js에 적용해 실행함. 기본 문법 14개는 형태 설명이므로 실행 대상에서 제외함. 실행 대상 미실행 없음. 검증 파일은 scratchpad/verify/06/에 원고 파일명 그대로 저장하고, 변형은 별도 하위 폴더에서 같은 파일명을 유지함. 각 stdout와 execution-report.json, 원고 사본도 저장함. Mermaid 1개는 book-mermaid render.mjs --format none으로 측정(compact, 747×138px, 14px), Playwright에서 실제 렌더링 후 라벨 겹침 0건 확인(mermaid-report.json). Mermaid 코드 블록을 원고에 유지함. 개념 그림 HTML은 capture-figure.mjs(Playwright, 배율 2)로 760×300px 회색 테두리 PNG를 만들고 실제 이미지를 열어 확인함. check-markdown.mjs·check-code.mjs 모두 발견 0건
+
 ### 8장. 불변 업데이트로 하는 CRUD
 
 - 상태: 확정 (2026-10-10 codex 초안, 검수 10건 반영, 보고서 .book/review/08장-검수.md)
@@ -92,7 +102,7 @@
 - common.css 내용 해설 → 15장
 - 화면 글자를 JavaScript로 바꾸기(연습문제 2 해설) → 10장
 - 합계 누적은 += 없이 total = total + 값 꼴로 씀. 2026-10-10 끝까지 쓰지 않기로 확정
-- 객체 리터럴 단축 문법(단축 속성 { name }, 계산된 속성 이름 [key]) → 6장 6-1 (2026-10-10 계획서에 추가). 5장 예제 5-14의 name: name을 6-1 도입 예시로 이어 씀
+- 객체 리터럴 단축 문법(단축 속성 { name }, 계산된 속성 이름 [key]) → 6장 6-1 (2026-10-10 계획서에 추가). 5장 예제 5-14의 name: name을 6-1 도입 예시로 이어 씀. 6장에서 다룸(makeField 예제)
 - 입력칸 여러 개를 함수 하나로 처리 → 6-1([key]), 6-5({ ...원본, [key]: 값 }), 12-2(e.target.name·value), 13-3(조립). React 모양(setPost, prev)은 쓰지 않고 input 이벤트 + post = { ...post, [e.target.name]: e.target.value } + render로 쓴다(강사 요청). 계획서에 항목마다 "이유" 줄을 둠. 원고 "왜 필요할까"는 그 이유를 따른다
 - slice → 7장 7-6 (concat·splice는 다루지 않음)
 - 2026-10-10 계획서 1~5장을 원고에 맞춰 동기화: 실습 이름(1-3, 3-5, 4-2, 5-2 추가분), 원고에서 더 다룬 내용(요소 바꾸기, 합계, 반복문 안 if, 함수 안 변수, 콜백·고차 함수, ?.(), 함수 표현식, ({ })), 5-4·5-5 예시 let → const. 제목·번호·연습문제는 원래 같았음
