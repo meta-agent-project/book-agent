@@ -36,7 +36,7 @@ const prompt = [
   `스타일: ${field("스타일")}`,
   "첨부한 그림은 선 굵기와 단순함만 참고한다. 첨부 그림의 사물은 그리지 않는다.",
   "Absolutely no text, letters, numbers, or symbols anywhere in the image.",
-  "Pure white background. Uniform black outlines. No shadows, no gradients. At most two flat fill colors besides black and white.",
+  "Pure white background. Uniform black outlines. No shadows, no gradients. Use black plus at most one other flat fill color (white does not count).",
 ].join("\n");
 
 const started = Date.now();
