@@ -16,7 +16,7 @@
 ### 2장. 변수와 자료형
 
 - 상태: 확정 (새 규칙으로 다시 씀)
-- 파일: book/02장-변수와-자료형.md, 개념 그림 book/images/02/const-object.png(원본 .book/figures/02/const-object.html), 생성 이미지 자리 images/02/let-const-analogy.png(아직 없음)
+- 파일: book/02장-변수와-자료형.md, 개념 그림 book/images/02/const-object.png(원본 .book/figures/02/const-object.html), 생성 이미지 book/images/02/let-const-analogy.png(원본 .book/figures/02/let-const-analogy.raw.png, Codex CLI로 생성)
 - 새 규칙 적용: 왜 필요할까(변수, const, 자료형, 템플릿 리터럴, 객체), 특징(재할당, const, typeof, 템플릿 리터럴, 객체, const 객체, delete), 비교표(let과 const, undefined와 null, 큰따옴표 문자열과 템플릿 리터럴, 점 표기법과 대괄호 표기법)
 - 설명한 개념: 변수, 선언, 할당(= 의 뜻), 카멜 표기법과 이름 규칙, 재할당, let과 const(이름표 비유: let=포스트잇, const=고정 명판), 자료형, 원시 자료형 5종(number·string·boolean·undefined·null), 연산자(정의만), typeof, 문자열과 숫자의 차이, undefined와 null의 차이, typeof null이 object인 점, 템플릿 리터럴과 ${}, 여러 줄 문자열, 객체, 속성·키·값, 점 표기법, 대괄호 표기법(변수 키), 속성 추가·수정(같은 = 문법), const 객체의 속성 변경(명판 비유: 명판은 상자에 고정, 상자 안은 바꿀 수 있음), delete, 없는 속성은 undefined
 - 쓴 문법과 API: let, const, 재할당, typeof, 템플릿 리터럴(`${}` 안에 typeof 같은 식도 씀), 객체 리터럴(마지막 속성 뒤 쉼표 없음), obj.key, obj["key"], obj[변수], obj.key = 값, delete obj.key
