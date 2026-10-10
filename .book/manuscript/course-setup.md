@@ -8,6 +8,8 @@
 - 실행 방법: .js는 VS Code 터미널에서 node 파일명.js, .html은 Live Server로 열고 Chrome 개발자 도구 Console 탭에서 확인
 - 버전: Node.js 22 LTS
 - 예제 형태 규칙: 2~9장 문법은 단일 .js, 10장부터 DOM은 단일 .html(script 태그 + 공통 CSS 연결), 1장은 둘 다
+- 16·17장은 .js(node), 16-4와 18~20장은 .html. 18-3 JSON 예제는 .js로 써도 된다
+- HTML 예제는 매번 전체 파일을 싣는다. 프로젝트 장(9·14·20)은 단계마다 전체 파일을 둔다
 
 ## 실습 파일 규칙
 
@@ -26,3 +28,4 @@
 - var는 쓰지 않는다
 - 화면 배치는 CSS Grid만 쓴다(flex 금지)
 - 10장 전까지 HTML의 script 태그는 body 닫는 태그 바로 앞에 둔다(defer는 10장)
+- 10장부터 script 태그는 head에 defer로 둔다
