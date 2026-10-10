@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>실행 결과 액자</title>
+  <!--
+    실행 결과 캡처를 연한 회색 테두리 상자에 넣어 한 장의 PNG로 다시 캡처하는 틀.
+    사용: result-frame.html?images=a.png|b.png&labels=클릭 전|클릭 후
+    - 이미지 1개: 한 줄에 하나. 원본은 창 폭 758px로 캡처한다.
+    - 이미지 2개: 한 줄에 둘. 원본은 창 폭 370px로 캡처한다.
+    - 완성본은 #frame 요소를 캡처한다. 전체 폭 760px.
+  -->
+  <style>
+    html,
+    body {
+      margin: 0;
+      background-color: #ffffff;
+    }
+
+    #frame {
+      display: grid;
+      gap: 16px;
+      width: 760px;
+    }
+
+    #frame.two {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    figure {
+      margin: 0;
+      border: 1px solid #d9d9d9;
+      border-radius: 8px;
+      overflow: hidden;
+      background-color: #ffffff;
+    }
+
+    figcaption {
+      padding: 6px 12px;
+      border-bottom: 1px solid #e5e5e5;
+      background-color: #fafafa;
+      color: #777777;
+      font-family: "Cascadia Mono", Consolas, monospace;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="frame"></div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const images = params.get("images").split("|");
+    const labels = (params.get("labels") || "").split("|");
+    const frame = document.querySelector("#frame");
+
+    if (images.length === 2) {
+      frame.classList.add("two");
+    }
+
+    images.forEach((src, index) => {
+      const figure = document.createElement("figure");
+      const caption = document.createElement("figcaption");
+      const image = document.createElement("img");
+
+      caption.textContent = labels[index] || src;
+      image.src = src;
+      figure.append(caption, image);
+      frame.append(figure);
+    });
+  </script>
+</body>
+</html>
