@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>const 명판이 붙은 객체 상자</title>
+  <!--
+    개념 그림 틀. 복사해서 .book/figures/{NN}/{그림 이름}.html로 저장하고 <svg> 안만 바꾼다.
+    스타일 기준: assets/style-ref/의 선 그림(굵기 일정한 검정 외곽선, 흰 배경, 평면 채색)
+    색은 세 가지만 쓴다: 흰색(바탕) · 검정 #111111(선 · 글자) · 강조 파랑 #3B8FE0(핵심 한 곳의 채움)
+    그림자 · 그라데이션 · 회색 · 다른 색은 쓰지 않는다
+    캡처: node .claude/skills/book-manuscript/scripts/capture-figure.mjs <이 파일> book/images/{NN}/{그림 이름}.png
+  -->
+  <style>
+    body { margin: 0; background: #ffffff; }
+    #figure { display: block; background: #ffffff; font-family: "Pretendard", "Malgun Gothic", sans-serif; }
+    .line { fill: none; stroke: #111111; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .shape { fill: #ffffff; stroke: #111111; stroke-width: 3; stroke-linejoin: round; }
+    .accent { fill: #3B8FE0; stroke: #111111; stroke-width: 3; stroke-linejoin: round; }
+    .text { fill: #111111; font-size: 18px; }
+    .title { fill: #111111; font-size: 22px; font-weight: 700; }
+    .on-accent { fill: #ffffff; font-size: 22px; font-weight: 700; }
+    .caption { fill: #111111; font-size: 17px; }
+  </style>
+</head>
+<body>
+  <!-- 폭은 760 고정. 높이만 그림에 맞춘다 -->
+  <svg id="figure" width="760" height="300" viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg">
+    <!-- 2장 2-4: const 명판이 붙은 객체 상자 -->
+    <rect class="accent" x="40" y="100" width="220" height="96" rx="14"/>
+    <circle class="shape" cx="60" cy="118" r="5"/>
+    <circle class="shape" cx="240" cy="118" r="5"/>
+    <circle class="shape" cx="60" cy="178" r="5"/>
+    <circle class="shape" cx="240" cy="178" r="5"/>
+    <text class="on-accent" x="150" y="156" text-anchor="middle">const member</text>
+    <text class="caption" x="150" y="236" text-anchor="middle">명판은 다른 상자로 옮길 수 없다</text>
+
+    <path class="line" d="M 272 148 L 432 148"/>
+    <path class="line" d="M 418 136 L 434 148 L 418 160"/>
+
+    <rect class="shape" x="450" y="56" width="270" height="190" rx="14"/>
+    <path class="line" d="M 450 98 L 720 98"/>
+    <text class="title" x="585" y="86" text-anchor="middle">객체 상자</text>
+    <text class="text" x="474" y="134">name : "김코딩"</text>
+    <text class="text" x="474" y="172">grade : "실버" → "골드"</text>
+    <text class="text" x="474" y="210">email : 새로 추가</text>
+    <text class="caption" x="585" y="282" text-anchor="middle">상자 안은 바꿀 수 있다</text>
+  </svg>
+</body>
+</html>
