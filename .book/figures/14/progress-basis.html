@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>개념 그림 틀</title>
+  <!--
+    개념 그림 틀. 복사해서 .book/figures/{NN}/{그림 이름}.html로 저장하고 <svg> 안만 바꾼다.
+    스타일 기준: assets/style-ref/의 선 그림(굵기 일정한 검정 외곽선, 흰 배경, 평면 채색)
+    색은 흰색(바탕)과 검정 #111111(선 · 글자)만 쓴다
+    파랑 #3B8FE0(.accent)은 색이 없으면 주인공이 배경에 묻힐 때만 쓰고, 그 이유를 여기에 적는다
+    그림자 · 그라데이션 · 회색 · 다른 색은 쓰지 않는다
+    연한 회색 테두리는 capture-figure.mjs가 캡처할 때 붙이므로 여기에 그리지 않는다
+    캡처: node .claude/skills/book-manuscript/scripts/capture-figure.mjs <이 파일> book/images/{NN}/{그림 이름}.png
+  -->
+  <style>
+    body { margin: 0; background: #ffffff; }
+    #figure { display: block; background: #ffffff; font-family: "Pretendard", "Malgun Gothic", sans-serif; }
+    .line { fill: none; stroke: #111111; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .shape { fill: #ffffff; stroke: #111111; stroke-width: 3; stroke-linejoin: round; }
+    .accent { fill: #3B8FE0; stroke: #111111; stroke-width: 3; stroke-linejoin: round; }
+    .text { fill: #111111; font-size: 18px; }
+    .title { fill: #111111; font-size: 22px; font-weight: 700; }
+    .on-accent { fill: #ffffff; font-size: 22px; font-weight: 700; }
+    .caption { fill: #111111; font-size: 17px; }
+  </style>
+</head>
+<body>
+  <!-- 폭은 760 고정. 높이만 그림에 맞춘다 -->
+  <svg id="figure" width="760" height="320" viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg">
+    <rect class="shape" x="28" y="24" width="336" height="210" rx="14"/>
+    <text class="title" x="196" y="62" text-anchor="middle">todos · 전체 2개</text>
+    <path class="line" d="M 28 82 L 364 82"/>
+    <text class="text" x="48" y="124">1 · JavaScript 복습 · 진행</text>
+    <text class="text" x="48" y="166">2 · 개발 환경 확인 · 완료</text>
+    <text class="caption" x="48" y="210">완료 1개 / 전체 2개</text>
+    <rect class="shape" x="396" y="24" width="336" height="210" rx="14"/>
+    <text class="title" x="564" y="62" text-anchor="middle">visibleTodos · 완료 필터</text>
+    <path class="line" d="M 396 82 L 732 82"/>
+    <text class="text" x="416" y="124">2 · 개발 환경 확인 · 완료</text>
+    <text class="caption" x="416" y="210">보이는 카드 1개</text>
+    <text class="title" x="380" y="278" text-anchor="middle">getProgress(todos) → 50%</text>
+    <text class="caption" x="380" y="308" text-anchor="middle">필터를 바꿔도 진행률은 전체 목록에서 계산합니다.</text>
+  </svg>
+</body>
+</html>
