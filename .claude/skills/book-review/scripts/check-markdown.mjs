@@ -163,8 +163,8 @@ for (let i = 0; i < lines.length; i++) {
 flushSingleRun();
 
 function flushSingleRun() {
-  if (singleRun.length >= 3) {
-    findings.push({ line: singleRun[0], rule: "MD-3 PARA_RUN?", current: lines[singleRun[0] - 1].trim(), note: `한 문장 문단 ${singleRun.length}개 연속(${singleRun.join(", ")}줄), 같은 내용이면 한 문단으로` });
+  if (singleRun.length >= 2) {
+    findings.push({ line: singleRun[0], rule: "MD-3 PARA_RUN?", current: lines[singleRun[0] - 1].trim(), note: `한 문장 문단 ${singleRun.length}개 연속(${singleRun.join(", ")}줄), 이어지는 문장이면 빈 줄 없이 다음 줄에` });
   }
   singleRun = [];
 }
