@@ -108,7 +108,7 @@
 
 - document.querySelector, textContent → 10장
 - addEventListener → 12장 (예제 1-1의 () => {} 형태는 5장 5-5에서 설명함)
-- script 위치와 defer → 10장
+- script 위치와 defer → 10장. 2026-10-10 규칙 바꿈: 인라인 script에는 defer가 효과 없어 모든 장 body 끝에 둔다. 10-1은 외부 파일 예시로 비교만 한다
 - common.css 내용 해설 → 15장
 - 화면 글자를 JavaScript로 바꾸기(연습문제 2 해설) → 10장
 - 합계 누적은 += 없이 total = total + 값 꼴로 씀. 2026-10-10 끝까지 쓰지 않기로 확정

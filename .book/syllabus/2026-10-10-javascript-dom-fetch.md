@@ -35,6 +35,7 @@
   - 새 id는 nextId를 ++로 올려 정한다. +=는 쓰지 않는다.
   - 새 내장 기능은 처음 쓰는 곳에서 짧게 소개한다. join(7-3), Math.round(9-4), Number(12-4), trim(13-2), throw(18-5), includes(20-4)
   - 로딩 표시는 다루지 않는다. 요청이 빨라 거의 보이지 않는다.
+  - script는 모든 장에서 body 끝에 둔다. defer는 인라인 script에 효과가 없어 10-1에서 외부 파일 예시로 비교만 한다(2026-10-10 10장 집필 중 바꿈).
 - 제외: 클래스와 프로토타입, localStorage, 모듈, Promise 직접 구현, then·catch, 마이크로태스크, Promise.all, setInterval·clearTimeout, PATCH, HTML·CSS 기초(Grid 제외), jQuery·XMLHttpRequest, Node.js 백엔드, TypeScript·번들러
 - 뺀 세부 문법: 부모·자식·형제 탐색, closest, keydown, stopPropagation, 나머지 요소·속성(...rest), 구조분해 이름 바꾸기·중첩, structuredClone, innerHTML 보안 위험
 
@@ -199,7 +200,7 @@
 
 ### 10장. DOM 탐색과 제어
 - 10-1 DOM이란
-  - HTML이 JavaScript 객체 트리가 되는 과정을 본다. body 끝과 defer를 비교하고 10장부터 script를 head에 defer로 둔다.
+  - HTML이 JavaScript 객체 트리가 되는 과정을 본다. body 끝과 defer를 비교한다. defer는 src로 연결한 외부 파일에만 적용되므로 이 책의 단일 HTML 예제는 script를 body 끝에 둔다.
 - 10-2 요소 찾기
   - querySelector와 querySelectorAll로 요소를 찾는다. querySelectorAll 결과는 forEach로 돈다.
 - 10-3 내용과 값 바꾸기
