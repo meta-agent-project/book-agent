@@ -1,4 +1,4 @@
-// codelab-mermaid 브라우저 쪽 — render.mjs가 esbuild로 묶어 페이지에 넣는다(scripts/.build/browser.js).
+// book-mermaid 브라우저 쪽 — render.mjs가 esbuild로 묶어 페이지에 넣는다(scripts/.build/browser.js).
 // 배치 · 테마 · 직각 배치 고침은 웹 화면용 assets/web/ 를 그대로 쓴다(따로 옮겨 쓰지 않음).
 import mermaid from "mermaid";
 import elkLayouts from "@mermaid-js/layout-elk";

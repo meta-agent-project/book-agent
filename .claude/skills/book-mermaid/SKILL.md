@@ -1,9 +1,9 @@
 ---
-name: codelab-mermaid
+name: book-mermaid
 description: Mermaid 도식(흐름도 · 순서도 · 상태도 · ER · Git 그래프)을 쓰거나 그릴 때 이 스킬을 쓴다. 프로젝트가 도식 모양을 적어 두었으면(CLAUDE.md · 디자인 스펙 · 코드의 mermaid.initialize 테마) 그쪽을 따른다. 없으면 사용자가 정한 디자인(mono 글꼴 · 흰 바탕 · 검정 글자 · 1px 선)과 배치 규칙(가로 스크롤 없음 → 줄이기 → 줄바꿈 → 세로)을 묻지 말고 그대로 적용한다. 원고 · 교재 · 책 · 블로그 · 강의 자료에 머메이드/mermaid/도식/다이어그램/ERD/흐름도/시퀀스 다이어그램을 넣을 때, MD 원고 안 ```mermaid 블록을 PNG/SVG 그림으로 바꿀 때, 웹 앱 화면에 Mermaid를 그려 넣을 때 사용한다. "ER 그려줘", "이 흐름 도식으로", "원고 도식 이미지로 뽑아줘"처럼 Mermaid라는 말이 없어도 구조 · 흐름 그림을 만들 일이면 쓴다.
 ---
 
-# codelab-mermaid
+# book-mermaid
 
 Mermaid를 사용자가 정한 한 가지 모양으로 그린다.
 디자인은 2026-10-08 시안 3개(A 도면형 · B 선만 · C 반전 머리) 중 B 선만을 세 번 고쳐 승인받은 것이다.
@@ -152,17 +152,17 @@ render.mjs가 처음 실행 때와 그 파일들이 바뀌었을 때 esbuild로 
 처음 한 번만 설치한다(프로젝트 루트에서).
 
 ```bash
-cd .claude/skills/codelab-mermaid && npm install && npx playwright install chromium
+cd .claude/skills/book-mermaid && npm install && npx playwright install chromium
 ```
 
 그리기
 
 ```bash
 # MD 원고: ```mermaid 블록마다 그림 + 블록을 그림 링크로 바꾼 MD
-node .claude/skills/codelab-mermaid/scripts/render.mjs 원고.md --md-out 원고.rendered.md
+node .claude/skills/book-mermaid/scripts/render.mjs 원고.md --md-out 원고.rendered.md
 
 # 도식 하나(.mmd)
-node .claude/skills/codelab-mermaid/scripts/render.mjs 구조.mmd --format both
+node .claude/skills/book-mermaid/scripts/render.mjs 구조.mmd --format both
 ```
 
 | 옵션 | 기본 | 뜻 |

@@ -1,32 +1,32 @@
 ---
-name: codelab-review
-description: codelab-manuscript의 원고 한 장을 코드 형식·한글 띄어쓰기·문체·초보자 가독성·마크다운 구조 기준으로 검수한다. 보고서 작성→항목별 승인→백업 후 승인 항목만 수정한다. 원고 검수, 문체, 가독성, 들여쓰기, MD 체크 요청에 사용한다.
+name: book-review
+description: book-manuscript의 원고 한 장을 코드 형식·한글 띄어쓰기·문체·초보자 가독성·마크다운 구조 기준으로 검수한다. 보고서 작성→항목별 승인→백업 후 승인 항목만 수정한다. 원고 검수, 문체, 가독성, 들여쓰기, MD 체크 요청에 사용한다.
 ---
 
-# codelab-review
+# book-review
 
 ## 역할
-**원고 한 장의 표현과 형식**을 검수한다. 개념·실행 결과·계획서 적합성의 정확성 검증은 `codelab-manuscript`의 책임이며, 검수 중 발견한 내용 문제는 `판단 필요`로 전달한다.
+**원고 한 장의 표현과 형식**을 검수한다. 개념·실행 결과·계획서 적합성의 정확성 검증은 `book-manuscript`의 책임이며, 검수 중 발견한 내용 문제는 `판단 필요`로 전달한다.
 
 ## 1. 준비
-`.codelab/`과 `book/`은 프로젝트 루트 기준이고, `references/`와 `scripts/`는 이 스킬 폴더 기준이다.
+`.book/`과 `book/`은 프로젝트 루트 기준이고, `references/`와 `scripts/`는 이 스킬 폴더 기준이다.
 
-대상 경로가 있으면 해당 파일을, 장 번호가 있으면 `book/{NN}장-*.md`를 선택한다. 미지정이면 `.codelab/manuscript/ledger.md`에 기록된 장 중 `.codelab/review/{NN}장-검수.md`가 아직 없는 가장 최근 장을 제안한다.
+대상 경로가 있으면 해당 파일을, 장 번호가 있으면 `book/{NN}장-*.md`를 선택한다. 미지정이면 `.book/manuscript/ledger.md`에 기록된 장 중 `.book/review/{NN}장-검수.md`가 아직 없는 가장 최근 장을 제안한다.
 
 다음 기준을 읽는다.
-- `.claude/skills/codelab-manuscript/references/style-guide.md`: 문체(1장), 오류 학습 범위(4장), 코드(5장), 읽기 쉬움(8장 R-1~R-9), MD 가독성(9장 MD-1~MD-5)
-- `.codelab/manuscript/course-setup.md`: 코드 컨벤션 예외
-- `.codelab/syllabus/`와 `ledger.md`: 학습자 수준·해당 장 범위·이미 배운 내용
+- `.claude/skills/book-manuscript/references/style-guide.md`: 문체(1장), 오류 학습 범위(4장), 코드(5장), 읽기 쉬움(8장 R-1~R-9), MD 가독성(9장 MD-1~MD-5)
+- `.book/manuscript/course-setup.md`: 코드 컨벤션 예외
+- `.book/syllabus/`와 `ledger.md`: 학습자 수준·해당 장 범위·이미 배운 내용
 - `references/spacing.md`, `references/korean-style.md`
 
 ## 2. 다섯 가지 검사
 | 검사 | 실행·판단 방식 |
 |---|---|
-| 코드 | `node .claude/skills/codelab-review/scripts/check-code.mjs <원고 경로>` 실행. 탭, 2칸 단위 들여쓰기, 후행 공백, 따옴표, 쉼표·콜론·연산자 주변 공백, 세미콜론 등 점검. `?`가 붙은 추정 진단은 직접 판단 |
+| 코드 | `node .claude/skills/book-review/scripts/check-code.mjs <원고 경로>` 실행. 탭, 2칸 단위 들여쓰기, 후행 공백, 따옴표, 쉼표·콜론·연산자 주변 공백, 세미콜론 등 점검. `?`가 붙은 추정 진단은 직접 판단 |
 | 띄어쓰기 | `spacing.md`에 따라 본문·코드 속 한국어 문자열·주석과 장 내 표기 일관성 확인 |
 | 문체 | `korean-style.md`에 따라 합니다체·개념어 유지, 간결한 교재 문장으로 교정. 교재 예외 적용 |
 | 읽기 쉬움 | 학습자의 선수지식과 ledger를 기준으로 R-1~R-9 검사. 코드 변경이 필요한 사항은 `판단 필요`로 이관 |
-| MD 가독성 | `node .claude/skills/codelab-review/scripts/check-markdown.mjs <원고 경로>` 실행. 제목 계층, 목록 속 코드 블록, 본문·목록 줄 끝의 불필요한 역슬래시, 한 줄 한 문장, 한 문장 문단 연속, 블록 제목, 표 셀 검사. 일반 줄바꿈에 역슬래시를 요구하지 않으며 문단을 묶거나 나눌 때 원문 문장 유지 |
+| MD 가독성 | `node .claude/skills/book-review/scripts/check-markdown.mjs <원고 경로>` 실행. 제목 계층, 목록 속 코드 블록, 본문·목록 줄 끝의 불필요한 역슬래시, 한 줄 한 문장, 한 문장 문단 연속, 블록 제목, 표 셀 검사. 일반 줄바꿈에 역슬래시를 요구하지 않으며 문단을 묶거나 나눌 때 원문 문장 유지 |
 
 코드 검사 스크립트의 블록 유형 분류를 확인한다: `기본 문법`은 문법, `예제 N-k`·`실습 코드`·파일명·`<!DOCTYPE`는 완결 코드, `실행 결과`·text 블록은 출력, 나머지는 코드 조각으로 판단한다. 코드 조각은 **0칸 들여쓰기에서 시작**하는 형태로 제안하며, 원본 예제와 변경 부분을 대조한다. 변수·함수는 뜻이 드러나는 camelCase를 권장한다. 과정별 예외를 우선 적용한다. `course-setup.md`가 규칙을 완화하면 해당 진단을 버리고, 금지 항목을 더하면(예: `var` 금지) 어긴 코드를 `CONVENTION` 규칙으로 보고한다.
 
@@ -53,7 +53,7 @@ description: codelab-manuscript의 원고 한 장을 코드 형식·한글 띄�
 - 마지막 줄에 답하는 방법을 쓴다.
 
 ```markdown
-**{N}장 검수: {n}건** (바로 고칠 것 {a} / 판단 필요 {b}) · 상세: `.codelab/review/{NN}장-검수.md`
+**{N}장 검수: {n}건** (바로 고칠 것 {a} / 판단 필요 {b}) · 상세: `.book/review/{NN}장-검수.md`
 
 **바로 고칠 것**
 
@@ -74,7 +74,7 @@ description: codelab-manuscript의 원고 한 장을 코드 형식·한글 띄�
 ```
 
 ### 3-3. 상세 보고서
-`.codelab/review/{NN}장-검수.md`에 저장한다. 맨 앞에 3-2의 선택표를 그대로 넣고, 그 아래에 분야별 상세 표를 둔다. 코드 공백은 `·` 기호로 표시한다. 빈 검사는 `없음`이라고 쓴다.
+`.book/review/{NN}장-검수.md`에 저장한다. 맨 앞에 3-2의 선택표를 그대로 넣고, 그 아래에 분야별 상세 표를 둔다. 코드 공백은 `·` 기호로 표시한다. 빈 검사는 `없음`이라고 쓴다.
 
 ```markdown
 # {N}장 검수 보고서
@@ -109,8 +109,8 @@ description: codelab-manuscript의 원고 한 장을 코드 형식·한글 띄�
 
 ## 4. 승인 후 반영
 1. 채팅에 선택표를 보여 주고 `추천대로/전부/선택 번호/제외 번호`로 승인받는다. 승인 전 원고는 원형을 유지한다. 답에서 빠진 번호는 반영하지 않고, 반영 결과를 알릴 때 남은 번호를 한 줄로 다시 묻는다.
-2. 원본을 `.codelab/review/backup/{NN}장.{YYYYMMDD-HHMM}.md`로 백업한다.
-3. **승인 항목만** 수정한다. 코드에서는 공백·들여쓰기·따옴표·세미콜론만 조정한다. 코드 동작 변경과 내용 정정은 `codelab-manuscript`로 전달한다. 문체는 합니다체와 개념어, 원래 의미를 유지하며 다듬는다. 읽기 쉬움·MD 수정에는 필요시 연결 문장 추가, 문단 묶기와 나누기, 줄 풀이의 하이픈 목록 전환, 제목 단계·블록 배치를 적용한다.
+2. 원본을 `.book/review/backup/{NN}장.{YYYYMMDD-HHMM}.md`로 백업한다.
+3. **승인 항목만** 수정한다. 코드에서는 공백·들여쓰기·따옴표·세미콜론만 조정한다. 코드 동작 변경과 내용 정정은 `book-manuscript`로 전달한다. 문체는 합니다체와 개념어, 원래 의미를 유지하며 다듬는다. 읽기 쉬움·MD 수정에는 필요시 연결 문장 추가, 문단 묶기와 나누기, 줄 풀이의 하이픈 목록 전환, 제목 단계·블록 배치를 적용한다.
 4. 두 검사 스크립트를 다시 실행해 승인 사항을 확인하고, 파일·줄 참조의 정합성을 점검한다.
 5. 백업과 결과를 비교해 변경률을 계산하고 `반영 {번호} / 그대로 {번호} / 변경률 x% / 백업 경로`를 한 줄로 알린다. 변경률이 30% 초과면 과도한 교정 가능성을 알린다. 같은 내용을 상세 보고서 끝 `## 반영 결과`에 남긴다.
 
@@ -125,4 +125,4 @@ PY
 ```
 
 ## 5. 재사용 규칙
-반복되는 피드백은 위치를 골라 반영 승인을 받는다. 공통 집필 기준은 `.claude/skills/codelab-manuscript/references/style-guide.md`, 과정 예외는 `.codelab/manuscript/course-setup.md`, 띄어쓰기 관례는 `references/spacing.md`에 반영한다.
+반복되는 피드백은 위치를 골라 반영 승인을 받는다. 공통 집필 기준은 `.claude/skills/book-manuscript/references/style-guide.md`, 과정 예외는 `.book/manuscript/course-setup.md`, 띄어쓰기 관례는 `references/spacing.md`에 반영한다.

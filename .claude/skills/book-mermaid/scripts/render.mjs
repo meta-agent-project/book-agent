@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// codelab-mermaid 렌더러 — Mermaid를 정해진 디자인 · 배치 규칙으로 PNG/SVG로 그린다.
+// book-mermaid 렌더러 — Mermaid를 정해진 디자인 · 배치 규칙으로 PNG/SVG로 그린다.
 //
 // 쓰는 법:
 //   node render.mjs <원고.md | 도식.mmd> [--width 760] [--out <폴더>] [--format png|svg|both|none] [--scale 2] [--md-out <파일.md>]
@@ -22,7 +22,7 @@ function need(pkg) {
   try {
     return require.resolve(pkg);
   } catch {
-    console.error(`[codelab-mermaid] '${pkg}'가 없습니다. 한 번만 설치하세요:\n  cd "${root}" && npm install && npx playwright install chromium`);
+    console.error(`[book-mermaid] '${pkg}'가 없습니다. 한 번만 설치하세요:\n  cd "${root}" && npm install && npx playwright install chromium`);
     process.exit(2);
   }
 }
@@ -76,7 +76,7 @@ try {
 }
 
 // 페이지: file:// 로 열어 글꼴 css의 상대 경로가 풀리게 한다
-const work = mkdtempSync(join(tmpdir(), "codelab-mermaid-"));
+const work = mkdtempSync(join(tmpdir(), "book-mermaid-"));
 const page = join(work, "page.html");
 writeFileSync(
   page,

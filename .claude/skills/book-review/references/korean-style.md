@@ -2,7 +2,7 @@
 
 출처: humanize-korean 단일 패스판(epoko77-ai/im-not-ai v2.3.2 Fast Path 룰북, MIT License, Copyright (c) 2026 epoko77-ai). 교재 원고에 맞게 패턴을 고르고 예외를 붙였다. 패턴 ID는 원본과 같게 둔다.
 
-원고 문체의 1차 기준은 `codelab-manuscript/references/style-guide.md`다. 이 문서와 충돌하면 style-guide.md를 따른다.
+원고 문체의 1차 기준은 `book-manuscript/references/style-guide.md`다. 이 문서와 충돌하면 style-guide.md를 따른다.
 
 ## 철칙
 

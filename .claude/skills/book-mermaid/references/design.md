@@ -1,4 +1,4 @@
-# codelab-mermaid 디자인 결정 기록
+# book-mermaid 디자인 결정 기록
 
 2026-10-08 강의 앱(lecture-maker) 007 원고 입력 세션 5에서 사용자와 정했다.
 앱 쪽 기록은 project/specs/design/components.md 도식 절, project/specs/007-manuscript/research.md 결정 19에 있다.

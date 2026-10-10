@@ -1,8 +1,8 @@
 {
-  "name": "codelab-mermaid",
+  "name": "book-mermaid",
   "private": true,
   "type": "module",
-  "description": "Mermaid를 codelab 디자인(mono · 흰 바탕 · 검정 글자)과 폭 맞춤 배치 규칙으로 PNG/SVG로 그린다",
+  "description": "Mermaid를 book 디자인(mono · 흰 바탕 · 검정 글자)과 폭 맞춤 배치 규칙으로 PNG/SVG로 그린다",
   "dependencies": {
     "@mermaid-js/layout-elk": "0.2.3",
     "elkjs": "0.9.3",
