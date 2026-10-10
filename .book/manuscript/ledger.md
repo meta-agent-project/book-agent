@@ -234,3 +234,4 @@
 - 2026-10-10 6~20장 목차와 규칙을 강사와 장마다 정해 계획서에 반영함. 공통 규칙은 계획서 가정한 것의 "6~20장 결정", 장별 결정은 세부목차에 있다. 바꾸기 전 계획서는 .book/review/backup/syllabus.20261010-pre-batch.md
 - 6~20장 장별 질문(막히는 지점·비유·비중)은 이 결정으로 대신한다. 원고 작성 때 다시 묻지 않는다
 - 17장 delay 함수 안의 new Promise·resolve·reject는 설명하지 않음(Promise 직접 구현 제외). new Error는 18-5 throw new Error에서 설명
+- 2026-10-11 생성 이미지 자리 12곳 추가(아직 이미지 없음): 1장 html-css-js-house, 3장 condition-fork, 4장 loop-stamp, 5장 function-button, 6장 spread-new-box, 12장 event-doorbell·delegation-guard, 13장 state-whiteboard, 15장 grid-organizer, 16장 single-cashier, 17장 promise-pager, 18장 ajax-refill. 비유 두세 줄과 그림 아래 코드 연결 문장을 함께 넣음. 만들 때는 scripts/generate-image.mjs
