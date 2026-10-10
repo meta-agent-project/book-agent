@@ -26,6 +26,8 @@
 ## 코드 컨벤션 예외
 
 - var는 쓰지 않는다
+- catch의 오류 메시지도 innerHTML로 화면에 넣는다(textContent는 꼭 필요할 때만, 18~20장)
+- JSONPlaceholder 자원은 본문에서 "게시글"로 부른다("글"과 섞지 않음)
 - 객체 리터럴 단축 속성({ title, content })은 쓰지 않는다. title: title처럼 쓴다. 구조분해와 계산된 속성 이름 [key]는 쓴다(2026-10-10)
 - 화면 배치는 CSS Grid만 쓴다(flex 금지)
 - HTML의 script 태그는 모든 장에서 body 닫는 태그 바로 앞에 둔다. defer는 src로 연결한 외부 파일에만 적용되고 단일 .html의 인라인 script에는 효과가 없기 때문이다(2026-10-10 바꿈, 전에는 "10장부터 head에 defer")
