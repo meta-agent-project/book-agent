@@ -36,6 +36,10 @@ await page.goto(pathToFileURL(resolve(input)).href);
 if (existsSync(fontCss)) {
   await page.addStyleTag({ path: fontCss });
 }
+// 책의 모든 이미지는 실행 결과 액자(assets/result-frame.html)와 같은 연한 회색 테두리를 붙인다
+await page.addStyleTag({
+  content: "#figure { box-sizing: border-box; border: 1px solid #d9d9d9; border-radius: 8px; overflow: hidden; }",
+});
 await page.evaluate(() => document.fonts.ready);
 
 const figure = await page.$("#figure");
