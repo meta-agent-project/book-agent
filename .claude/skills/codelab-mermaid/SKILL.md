@@ -1,6 +1,6 @@
 ---
 name: codelab-mermaid
-description: 리엑트강의 프로젝트에서 Mermaid 도식(흐름도 · 순서도 · 상태도 · ER · Git 그래프)을 쓰거나 그릴 때 전역 meta-mermaid 대신 이 스킬을 쓴다. 프로젝트가 도식 모양을 적어 두었으면(CLAUDE.md · 디자인 스펙 · 코드의 mermaid.initialize 테마) 그쪽을 따른다. 없으면 사용자가 정한 디자인(mono 글꼴 · 흰 바탕 · 검정 글자 · 1px 선)과 배치 규칙(가로 스크롤 없음 → 줄이기 → 줄바꿈 → 세로)을 묻지 말고 그대로 적용한다. 원고 · 교재 · 책 · 블로그 · 강의 자료에 머메이드/mermaid/도식/다이어그램/ERD/흐름도/시퀀스 다이어그램을 넣을 때, MD 원고 안 ```mermaid 블록을 PNG/SVG 그림으로 바꿀 때, 웹 앱 화면에 Mermaid를 그려 넣을 때 사용한다. "ER 그려줘", "이 흐름 도식으로", "원고 도식 이미지로 뽑아줘"처럼 Mermaid라는 말이 없어도 구조 · 흐름 그림을 만들 일이면 쓴다.
+description: Mermaid 도식(흐름도 · 순서도 · 상태도 · ER · Git 그래프)을 쓰거나 그릴 때 이 스킬을 쓴다. 프로젝트가 도식 모양을 적어 두었으면(CLAUDE.md · 디자인 스펙 · 코드의 mermaid.initialize 테마) 그쪽을 따른다. 없으면 사용자가 정한 디자인(mono 글꼴 · 흰 바탕 · 검정 글자 · 1px 선)과 배치 규칙(가로 스크롤 없음 → 줄이기 → 줄바꿈 → 세로)을 묻지 말고 그대로 적용한다. 원고 · 교재 · 책 · 블로그 · 강의 자료에 머메이드/mermaid/도식/다이어그램/ERD/흐름도/시퀀스 다이어그램을 넣을 때, MD 원고 안 ```mermaid 블록을 PNG/SVG 그림으로 바꿀 때, 웹 앱 화면에 Mermaid를 그려 넣을 때 사용한다. "ER 그려줘", "이 흐름 도식으로", "원고 도식 이미지로 뽑아줘"처럼 Mermaid라는 말이 없어도 구조 · 흐름 그림을 만들 일이면 쓴다.
 ---
 
 # codelab-mermaid
@@ -19,11 +19,10 @@ Mermaid를 사용자가 정한 한 가지 모양으로 그린다.
 - 원고 · 교재 · 책 · 블로그 · 강의 자료에 쓰인다는 이유만으로 이미지 파일을 만들거나 코드 블록을 이미지 링크로 바꾸지 않는다.
 - 시나리오로 나눌지 판단할 때는 --format none으로 재기만 한다. 그림 파일이 생기지 않으므로 요청 없이 해도 된다.
 
-## 리엑트강의 원고
+## 책 원고
 
 - 책 원고(book/NN장-제목.md)에는 설명 가까이에 언어명이 mermaid인 코드 블록으로 도식을 넣는다
 - book/ 바로 아래에는 장 원고만 둔다. 나눌지 잴 때도 --format none을 써서 파일을 남기지 않는다
-- 엔진(assets/web · scripts)은 meta-skill 저장소 meta-mermaid와 같다. 고칠 때는 두 곳을 함께 맞춘다. 동작은 같고 웹 CSS 클래스 이름(prose__diagram)만 다르다
 
 결정 과정 · 이유 · 시안 기록은 references/design.md에 있다.
 왜 이런 규칙인지 궁금할 때만 읽는다.
@@ -150,7 +149,7 @@ scripts/browser.ts가 assets/web/의 TS 파일을 불러 쓴다.
 render.mjs가 처음 실행 때와 그 파일들이 바뀌었을 때 esbuild로 scripts/.build/browser.js 하나로 묶는다.
 배치 · 모양을 고칠 때는 assets/web/만 고친다(웹 화면 · 그림 파일이 함께 바뀐다).
 
-처음 한 번만 설치한다(리엑트강의 루트에서).
+처음 한 번만 설치한다(프로젝트 루트에서).
 
 ```bash
 cd .claude/skills/codelab-mermaid && npm install && npx playwright install chromium
@@ -185,14 +184,15 @@ layout(base · compact · wrap · flip), scale, fontPx, width · height(들어�
 ## 웹 앱 화면에 넣기
 
 React 앱이면 assets/web/의 파일을 가져다 쓴다.
-고칠 때는 meta-mermaid와 강의 앱을 함께 맞춘다.
+이 스킬이 원본이다.
+프로젝트에 복사해 쓰고, 고칠 때는 여기와 프로젝트를 함께 맞춘다.
 그림 품질은 render.mjs와 같다.
 
 - theme.ts는 값과 mermaid 설정(DIAGRAM_CONFIG, secure 잠금 포함)
 - layout.ts는 배치 규칙(layoutDiagram, 순환 없는 흐름 도식만 layout elk), PK 굵게(emphasizeKeys), 줄바꿈 연결선(drawReturns), 세 노드 순환의 돌아가는 선(drawCycleReturn)
 - elk-adjust.ts는 흐름 도식 직각 배치 고침(마름모 꼭짓점 · 마주 보는 선 펴기 · 짧은 계단 없애기 · 글자 겹침 피하기 · 줄일 때 간격 좁히기). installElkAdjust(ELK)로 elkjs의 layout()을 감싼다
 - Diagram.tsx는 읽는 글 폭을 ResizeObserver로 재고(바뀌면 150ms 멈춘 뒤 한 번), 쓰는 중이 아닐 때 그린다. 실패하면 원래 코드 블록과 "도식을 그리지 못했습니다"
-- diagram.css는 가로 스크롤 없이 폭에 맞춰 줄이는 CSS. 클래스는 prose__diagram. 강의 앱 토큰(--space-* 등) 이름을 쓴다
+- diagram.css는 가로 스크롤 없이 폭에 맞춰 줄이는 CSS. 클래스는 prose__diagram. 앱 토큰(--space-* 등) 이름을 쓰므로 다른 프로젝트에서는 그 프로젝트 토큰 이름으로 바꾼다
 
 연결 방법
 

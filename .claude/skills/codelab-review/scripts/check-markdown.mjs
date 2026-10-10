@@ -73,6 +73,10 @@ for (let i = 0; i < lines.length; i++) {
   const line = lines[i];
   const lineNumber = i + 1;
 
+  if (/\\[ \t]*$/.test(line)) {
+    findings.push({ line: lineNumber, rule: "MD-3 TRAILING_BACKSLASH", current: line.trim(), note: "본문·목록 줄 끝의 줄바꿈용 역슬래시를 제거" });
+  }
+
   const heading = line.match(HEADING);
   if (heading) {
     const level = heading[1].length;
@@ -132,16 +136,13 @@ for (let i = 0; i < lines.length; i++) {
       j++;
     }
 
-    // 문단 안에서는 한 줄에 한 문장, 마지막 줄을 뺀 줄 끝에 \ (엔터만 치면 렌더링에서 한 줄로 합쳐진다)
+    // 문단 안에서는 한 줄에 한 문장, 일반 줄바꿈으로 이어 쓴다.
     let total = 0;
     paragraph.forEach((paragraphLine, k) => {
       const count = countSentences(paragraphLine.replace(/\\$/, ""));
       total += count;
       if (count >= 2) {
         findings.push({ line: lineNumber + k, rule: "MD-3 LINE_MULTI", current: paragraphLine.trim(), note: `한 줄에 ${count}문장` });
-      }
-      if (k < paragraph.length - 1 && !paragraphLine.endsWith("\\")) {
-        findings.push({ line: lineNumber + k, rule: "MD-3 LINE_BREAK", current: paragraphLine.trim(), note: "줄 끝 \\ 없음, 다음 줄과 이어 붙어 보임" });
       }
     });
     if (total >= 5) {
