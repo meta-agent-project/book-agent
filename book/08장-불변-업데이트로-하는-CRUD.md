@@ -493,7 +493,7 @@ function updateCity(member, city) {
     ...member,
     address: {
       ...member.address,
-      city
+      city: city
     }
   };
 }
@@ -529,7 +529,7 @@ console.log("같은 주소 객체인가:", beforeMember.address === member.addre
 **코드 설명**
 
 - `updateCity()`는 예제 8-4의 복사 코드를 함수로 묶었습니다. 새 도시는 매개변수 `city`로 받습니다.
-- 안쪽의 `city`는 6장에서 배운 단축 속성으로 `city: city`와 같습니다. 앞에서 전개한 기존 `city`를 매개변수의 값으로 덮어씁니다.
+- 안쪽의 `city: city`는 속성 이름 `city`에 매개변수 `city`의 값을 담습니다. 앞에서 전개한 기존 `city`를 매개변수의 값으로 덮어씁니다.
 - `member = updateCity(member, "부산");`으로 반환값을 할당해야 현재 회원이 새 객체로 바뀝니다.
 - `beforeMember`는 변경 전 회원 객체를 계속 가리킵니다. 안쪽 주소까지 복사했으므로 변경 전 주소도 유지됩니다.
 
@@ -556,8 +556,8 @@ function updateAddress(member, city, zipCode) {
     ...member,
     address: {
       ...member.address,
-      city,
-      zipCode
+      city: city,
+      zipCode: zipCode
     }
   };
 }
