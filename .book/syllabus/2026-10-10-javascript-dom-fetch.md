@@ -317,9 +317,9 @@
 - 18-3 REST API와 JSON
   - 자원 중심 주소 설계와 JSON.stringify·JSON.parse를 배운다.
 - 18-4 fetch로 GET 요청
-  - fetch와 response.json으로 데이터를 받는다. 주소에 ?_limit=10을 붙여 10개만 받는다. 실습: JSONPlaceholder 글 목록을 화면에 그리기
+  - fetch와 response.json으로 데이터를 받는다. 주소에 ?_limit=10을 붙여 10개만 받는다.
 - 18-5 실패 처리
-  - response.ok가 false면 throw new Error로 catch에 모은다. 404는 /posts/999로, 네트워크 오류는 도메인 오타로 보인다.
+  - response.ok가 false면 throw new Error로 catch에 모은다. 404는 /posts/999로, 네트워크 오류는 도메인 오타로 보인다. 실습: JSONPlaceholder 글 목록을 화면에 그리기(18-4·18-5 종합, response.ok 검사까지 씀)
 - 연습문제
   - 사용자 목록 카드로 그리기
   - 잘못된 주소 요청 시 오류 메시지 표시
