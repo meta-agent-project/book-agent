@@ -127,8 +127,8 @@ console.log("준비할 의자:", chairCount);
 장면: 왼쪽에는 손이 viewCount라고 적힌 포스트잇을 숫자 0 상자에서 떼어 숫자 1 상자에 붙인다. 오른쪽에는 title이라고 적힌 명판이 나사 네 개로 문에 박혀 있다.
 그림 속 글자: viewCount, 0, 1, title
 비율: 가로 3:2
-스타일: 굵기가 일정한 검정 외곽선의 단순한 선 그림. 흰 배경. 그림자와 그라데이션 없음. 색은 흰색, 검정, 파랑(#3B8FE0) 세 가지만 쓰고, 파랑은 포스트잇 한 곳만 평면으로 채운다.
-참고 그림: book-manuscript/assets/style-ref/line-art-shark.png, line-art-accent.png
+스타일: 굵기가 일정한 검정 외곽선의 단순한 선 그림. 흰 배경. 그림자와 그라데이션 없음. 색은 흰색과 검정만 쓴다.
+참고 그림: book-manuscript/assets/style-ref/line-art-shark.png
 ```
 
 포스트잇은 다른 상자로 옮겨 붙일 수 있지만, 명판은 처음 박은 자리에 그대로 있습니다.
@@ -1008,7 +1008,7 @@ const list = document.querySelector("#list"); list.prepend(item); ```
 
 ![예시 개념 그림](../assets/style-ref/concept-figure-sample.png)
 
-- 검정 외곽선만으로 상자와 화살표를 그렸고, 파랑은 명판 한 곳만 채웠다.
+- 흰색과 검정만으로 상자와 화살표를 그렸다. 명판은 나사 구멍으로 알아볼 수 있어 색을 넣지 않았다.
 - 그림 속 글자는 본문의 용어(`const member`, 객체 상자, 속성 이름)와 같다.
 - 캡션 두 줄이 특징 두 항목과 하나씩 맞물린다.
 
