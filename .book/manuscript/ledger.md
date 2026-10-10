@@ -48,12 +48,28 @@
 - 강사 메모: break·continue는 다루지 않음. 블록 안 const 선언은 여전히 쓰지 않음(소계는 item.price * item.quantity를 그 자리에서 계산). 구구단 변수는 강사 설명의 a 대신 num·dan
 - 검증: node v24.13.0으로 예제·실습·바꿔 보기·코드 조각·정답 전부 실행. Mermaid 2개 --format none으로 재서 모두 가로 배치(재고 확인 그림은 처음에 세로로 뒤집혀 한 회차 분기만 그리도록 줄임), 글자 13.4px 이상. check-markdown 0건
 
+### 5장. 함수와 화살표 함수
+
+- 상태: 초안
+- 파일: book/05장-함수와-화살표-함수.md, 개념 그림 book/images/05/function-io.png(원본 .book/figures/05/function-io.html)
+- 구성(강사 답 "없음", 추천안 반영): 5-2 뒤 따라하기 "장바구니 계산을 함수로 나누기" 추가(4장 cart-total.js를 함수 네 개로). 5-3 끝에 ?.() (예제 5-8에서 TypeError를 실제로 내고 5-9에서 막음). 계획서의 let hello = function 은 const로 씀
+- 새 규칙 적용: 왜 필요할까(함수, 반환값, 화살표 함수). 일급 객체는 정의 → 특징 세 가지 → 특징마다 예제로 씀(강사 지적: 세 조건은 정의가 아니라 특징, 좋은 점 절은 뺌), 특징(선언과 호출, 매개변수, return, 기본값 매개변수, 콜백, ?.(), 익명 함수, 화살표 함수), 비교표(매개변수와 인수, console.log와 return, 함수 이름과 호출, 함수 선언문과 함수 표현식, 블록 모양과 값 하나 모양), 비유(반환값 = 주문 금액 계산기). 개념 그림은 가로 배치로 줄임(높이 580 → 300)
+- 스킬 되돌림(2026-10-10): 요소 조합 방식으로 바꾼 style-guide·few-shot을 4장 때(851bc46)로 되돌림. SKILL.md는 목차 변경 절차만 남김(f628517). 5장은 되돌린 기준에 맞춰 5-2 반환값과 5-5 비교표를 되살림. 바꿨던 내용은 .book/review/backup/skills-20261010.patch
+- 설명한 개념: 함수, 함수 선언, 호출, 호출 뒤 돌아옴, 메서드는 값에 딸린 함수(console.log 포함), 매개변수, 인수, return, 반환값, return이 함수를 끝냄, return 없으면 undefined, 함수 안 변수(그 함수 안에서만, 호출마다 새로. 스코프 용어는 안 씀), 기본값 매개변수(인수 없으면 undefined), 일급 객체, 함수 자체와 호출 결과, typeof 함수는 function, 콜백 함수, 고차 함수, 옵셔널 호출 ?.(), TypeError is not a function, 함수 선언문, 익명 함수, 함수 표현식, 선언문은 위에서 호출 가능(표현식은 불가, 실행해 보이지 않음), 화살표 함수 두 모양(블록·값 하나), 매개변수 괄호는 항상 씀, 객체를 돌려줄 때 ({ })
+- 쓴 문법과 API: function 이름(매개변수) {}, return, 매개변수 = 기본값, const 이름 = 함수이름, 함수를 인수로 넘기기, 콜백매개변수(인수), 함수?.(), const 이름 = function () {};, 인수 자리 익명 함수, (매개변수) => {}, (매개변수) => 값, () => ({ 속성: 값 }), 중첩 호출 f(g(x)), ${} 안 함수 호출, 함수 블록 안 let·const 선언
+- 프로젝트 파일과 이름: chapter05/ function.js, parameter.js, return.js, average.js, default-parameter.js, cart-function.js(따라하기), function-value.js, callback.js, return-function.js, callback-error.js(에러 시연), optional-call.js, anonymous.js, anonymous-callback.js, arrow.js, arrow-callback.js, arrow-object.js, three-ways.js(따라하기), discount.js, count-if.js(연습문제). 주요 함수: printNotice, printOrder, getSubtotal(price, quantity = 1), getAverage, getTotalPrice(items), getShippingFee(totalPrice, freeLimit = 30000), printReceipt, printProducts(items, format), formatWithPrice, formatNameOnly, getFormatter(showPrice), placeOrder(productName, onComplete), sendMessage, greet, formatPrice, createProduct, formatDeclaration·formatExpression·formatArrow, getDiscountPrice(price, rate = 10), countIf(items, check)
+- 강사 메모: 막히는 지점·비유 요청 없음. 함수 안 변수 선언은 이 장부터 씀(블록 안 const 금지는 if·for 블록에만 남음). 속성 줄임 표기 { name }은 쓰지 않고 name: name
+- 검증: node v24.13.0으로 예제 19개·바꿔 보기 4개·코드 조각 실행. Mermaid 3개 --format none으로 재서 모두 가로(글자 12.3px 이상). 개념 그림 PNG 열어 확인. check-markdown 0건
+
 ## 앞으로 미룬 설명
 
 - document.querySelector, textContent → 10장
-- addEventListener, 화살표 함수 형태(예제 1-1) → 12장, 5장
+- addEventListener → 12장 (예제 1-1의 () => {} 형태는 5장 5-5에서 설명함)
 - script 위치와 defer → 10장
 - common.css 내용 해설 → 15장
 - 화면 글자를 JavaScript로 바꾸기(연습문제 2 해설) → 10장
-- 함수 호출에 쓰는 옵셔널 체이닝 ?.() → 5장
-- 합계 누적은 += 없이 total = total + 값 꼴로 씀(4장에서 적용). += 소개 여부는 미정
+- 합계 누적은 += 없이 total = total + 값 꼴로 씀(4·5장에서 적용). += 소개 여부는 미정
+- 객체 리터럴 단축 문법(단축 속성 { name }, 계산된 속성 이름 [key]) → 6장 6-1 (2026-10-10 계획서에 추가). 5장 예제 5-14의 name: name을 6-1 도입 예시로 이어 씀
+- 입력칸 여러 개를 함수 하나로 처리 → 6-1([key]), 6-5({ ...원본, [key]: 값 }), 12-2(e.target.name·value), 13-3(조립). React 모양(setPost, prev)은 쓰지 않고 input 이벤트 + post = { ...post, [e.target.name]: e.target.value } + render로 쓴다(강사 요청). 계획서에 항목마다 "이유" 줄을 둠. 원고 "왜 필요할까"는 그 이유를 따른다
+- slice → 7장 7-6 (concat·splice는 다루지 않음)
+- 2026-10-10 계획서 1~5장을 원고에 맞춰 동기화: 실습 이름(1-3, 3-5, 4-2, 5-2 추가분), 원고에서 더 다룬 내용(요소 바꾸기, 합계, 반복문 안 if, 함수 안 변수, 콜백·고차 함수, ?.(), 함수 표현식, ({ })), 5-4·5-5 예시 let → const. 제목·번호·연습문제는 원래 같았음
