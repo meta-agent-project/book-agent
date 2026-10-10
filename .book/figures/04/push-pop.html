@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>push와 pop이 바꾸는 배열의 끝</title>
+  <!--
+    개념 그림 틀. 복사해서 .book/figures/{NN}/{그림 이름}.html로 저장하고 <svg> 안만 바꾼다.
+    스타일 기준: assets/style-ref/의 선 그림(굵기 일정한 검정 외곽선, 흰 배경, 평면 채색)
+    색은 흰색(바탕)과 검정 #111111(선 · 글자)만 쓴다
+    파랑 #3B8FE0(.accent)은 색이 없으면 주인공이 배경에 묻힐 때만 쓰고, 그 이유를 여기에 적는다
+    그림자 · 그라데이션 · 회색 · 다른 색은 쓰지 않는다
+    캡처: node .claude/skills/book-manuscript/scripts/capture-figure.mjs <이 파일> book/images/{NN}/{그림 이름}.png
+  -->
+  <style>
+    body { margin: 0; background: #ffffff; }
+    #figure { display: block; background: #ffffff; font-family: "Pretendard", "Malgun Gothic", sans-serif; }
+    .line { fill: none; stroke: #111111; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .shape { fill: #ffffff; stroke: #111111; stroke-width: 3; stroke-linejoin: round; }
+    .accent { fill: #3B8FE0; stroke: #111111; stroke-width: 3; stroke-linejoin: round; }
+    .text { fill: #111111; font-size: 18px; }
+    .title { fill: #111111; font-size: 22px; font-weight: 700; }
+    .on-accent { fill: #ffffff; font-size: 22px; font-weight: 700; }
+    .caption { fill: #111111; font-size: 17px; }
+  </style>
+</head>
+<body>
+  <!-- 폭은 760 고정. 높이만 그림에 맞춘다 -->
+  <svg id="figure" width="760" height="470" viewBox="0 0 760 470" xmlns="http://www.w3.org/2000/svg">
+    <!-- 4장 4-1: push와 pop은 배열의 끝에서 요소를 넣고 뺀다 -->
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#111111"/>
+      </marker>
+    </defs>
+
+    <!-- 1줄: 처음 배열 -->
+    <text class="title" x="30" y="60">cart</text>
+    <rect class="shape" x="130" y="30" width="170" height="56" rx="10"/>
+    <rect class="shape" x="310" y="30" width="170" height="56" rx="10"/>
+    <text class="text" x="215" y="65" text-anchor="middle">"무선 마우스"</text>
+    <text class="text" x="395" y="65" text-anchor="middle">"기계식 키보드"</text>
+
+    <!-- push 화살표 -->
+    <path class="line" d="M 395 100 L 395 150" marker-end="url(#arrow)"/>
+    <text class="title" x="415" y="132">cart.push("모니터")</text>
+
+    <!-- 2줄: push 뒤 -->
+    <text class="title" x="30" y="200">cart</text>
+    <rect class="shape" x="130" y="170" width="170" height="56" rx="10"/>
+    <rect class="shape" x="310" y="170" width="170" height="56" rx="10"/>
+    <rect class="shape" x="490" y="170" width="170" height="56" rx="10" stroke-dasharray="0"/>
+    <text class="text" x="215" y="205" text-anchor="middle">"무선 마우스"</text>
+    <text class="text" x="395" y="205" text-anchor="middle">"기계식 키보드"</text>
+    <text class="text" x="575" y="205" text-anchor="middle">"모니터"</text>
+    <path class="line" d="M 490 242 L 660 242"/>
+    <text class="caption" x="575" y="266" text-anchor="middle">끝에 들어온 요소</text>
+
+    <!-- pop 화살표 -->
+    <path class="line" d="M 395 282 L 395 332" marker-end="url(#arrow)"/>
+    <text class="title" x="415" y="314">cart.pop()</text>
+
+    <!-- 3줄: pop 뒤 -->
+    <text class="title" x="30" y="382">cart</text>
+    <rect class="shape" x="130" y="352" width="170" height="56" rx="10"/>
+    <rect class="shape" x="310" y="352" width="170" height="56" rx="10"/>
+    <text class="text" x="215" y="387" text-anchor="middle">"무선 마우스"</text>
+    <text class="text" x="395" y="387" text-anchor="middle">"기계식 키보드"</text>
+    <path class="line" d="M 500 380 L 560 380" marker-end="url(#arrow)"/>
+    <text class="text" x="575" y="387">"모니터"</text>
+    <text class="caption" x="575" y="414">꺼내서 돌려준다</text>
+
+    <text class="caption" x="380" y="456" text-anchor="middle">push와 pop은 둘 다 배열의 끝에서 일한다</text>
+  </svg>
+</body>
+</html>

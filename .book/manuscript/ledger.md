@@ -36,6 +36,18 @@
 - 강사 메모: += 는 쓰지 않음(합계는 total = a + b 꼴). ++는 개념만. 배열은 만들고 꺼내 쓰는 데까지(값 바꾸기·push 없음). 블록 안 const 선언은 쓰지 않음(스코프 제외 과정)
 - 검증: node v24.13.0으로 예제·실습·바꿔 보기·정답 전부 실행. Mermaid 4개 --format none으로 재서 모두 가로 배치, 글자 13.3px 이상
 
+### 4장. 배열과 반복문
+
+- 상태: 확정 (2026-10-10 검수 8건 반영, 보고서 .book/review/04장-검수.md)
+- 파일: book/04장-배열과-반복문.md, 개념 그림 book/images/04/push-pop.png(원본 .book/figures/04/push-pop.html)
+- 구성 변경(강사 요청): 구구단은 패턴 찾기로 가르친다. 4-2 뒤 따라하기 "구구단 2단 출력하기"를 1단계 직접 적기 → 2단계 바뀌는 수(곱하는 수)를 변수 num으로 → 3단계 for에 넣기로 진행. 2~9단(중첩 for)은 연습문제 1에서 "단이 바뀌는 수"를 찾아 직접 푼다. 중첩 반복문 용어는 정답 해설에서 정의
+- 새 규칙 적용: 왜 필요할까(반복문), 특징(요소 바꾸기, push·pop, for, for...of), 비교표(push와 pop, for와 for...of)
+- 설명한 개념: 요소 바꾸기(const 배열도 가능, 2장 명판 비유 이어 씀), 메서드(값에 딸린 명령, console.log도 메서드), push(끝에 넣기), pop(끝 요소 빼서 돌려줌), 반복문, for의 세 부분(시작값·조건·증감), 반복 변수, 회차, 관례 이름 i, i < 배열.length, 반복하며 합계 구하기(0에서 시작, total = total + 값), 패턴 찾기(바뀌는 수 → 변수 → 반복문), for...of(요소를 변수에 담음, const 선언, 단수형 이름), 객체 배열 돌기, 반복문 안의 if와 개수 세기(count++), 중첩 반복문(정답 해설), 최댓값 구하기(첫 요소에서 시작, 정답 해설)
+- 쓴 문법과 API: 배열[인덱스] = 값, 배열.push(값), const 변수 = 배열.pop(), for (let i = 0; i < 배열.length; i++), 변수++ 실사용, for (const 요소 of 배열), 블록 안 if, 중첩 for
+- 프로젝트 파일과 이름: chapter04/ array-update.js, push.js, pop.js, for.js, for-array.js, for-sum.js, gugudan-1.js·gugudan-2.js·gugudan-3.js(따라하기), for-of.js, object-loop.js, stock-check.js, cart-total.js(따라하기), gugudan-all.js, score-stats.js(연습문제). 주요 이름: cart, removedItem, studentNo, i, steps, totalSteps, num, dan, products{name,price,stock}, product, soldOutCount, cartItems{name,price,quantity}, item, totalPrice, totalQuantity, shippingFee, scores, total, maxScore, average
+- 강사 메모: break·continue는 다루지 않음. 블록 안 const 선언은 여전히 쓰지 않음(소계는 item.price * item.quantity를 그 자리에서 계산). 구구단 변수는 강사 설명의 a 대신 num·dan
+- 검증: node v24.13.0으로 예제·실습·바꿔 보기·코드 조각·정답 전부 실행. Mermaid 2개 --format none으로 재서 모두 가로 배치(재고 확인 그림은 처음에 세로로 뒤집혀 한 회차 분기만 그리도록 줄임), 글자 13.4px 이상. check-markdown 0건
+
 ## 앞으로 미룬 설명
 
 - document.querySelector, textContent → 10장
@@ -44,5 +56,4 @@
 - common.css 내용 해설 → 15장
 - 화면 글자를 JavaScript로 바꾸기(연습문제 2 해설) → 10장
 - 함수 호출에 쓰는 옵셔널 체이닝 ?.() → 5장
-- 배열 push·pop, 요소 바꾸기 → 4장 4-1(만들기·꺼내기는 3장에서 끝남)
-- 합계 누적은 += 없이 total = total + 값 꼴로 → 4장
+- 합계 누적은 += 없이 total = total + 값 꼴로 씀(4장에서 적용). += 소개 여부는 미정
