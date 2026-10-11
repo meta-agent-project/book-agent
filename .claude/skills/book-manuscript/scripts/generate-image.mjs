@@ -2,9 +2,10 @@
 // 원고의 생성 이미지 자리로 Codex CLI에 그림을 만들게 하고, 테두리를 붙인 PNG로 저장한다.
 // 쓰는 법: node generate-image.mjs <원고.md> <파일명>
 // 원본은 .book/figures/{NN}/{파일명}.raw.png, 완성본은 book/images/{NN}/{파일명}.png에 둔다.
+// 원고가 book2/에 있으면 .book2/figures, book2/images처럼 원고 폴더 이름을 따른다.
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
-import { dirname, join, resolve } from "node:path";
+import { basename, dirname, join, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
@@ -27,6 +28,7 @@ if (!block) {
   process.exit(1);
 }
 const chapter = block[2];
+const bookDir = basename(dirname(resolve(manuscript)));
 const field = (label) => block[1].match(new RegExp(`^${label}: (.+)$`, "m"))?.[1] ?? "";
 
 const prompt = [
@@ -70,7 +72,7 @@ if (fresh.length === 0) {
 }
 const latest = fresh.sort((a, b) => b.mtime - a.mtime)[0].path;
 
-const figureDir = join(root, ".book/figures", chapter);
+const figureDir = join(root, `.${bookDir}`, "figures", chapter);
 mkdirSync(figureDir, { recursive: true });
 copyFileSync(latest, join(figureDir, `${name}.raw.png`));
 const html = join(figureDir, `${name}.html`);
@@ -79,7 +81,7 @@ writeFileSync(
   `<!doctype html>\n<meta charset="utf-8">\n<style>body { margin: 0; background: #fff; } #figure { display: block; width: 760px; }</style>\n<img id="figure" src="${name}.raw.png">\n`,
 );
 
-const output = join(root, "book/images", chapter, `${name}.png`);
+const output = join(root, bookDir, "images", chapter, `${name}.png`);
 const capture = spawnSync(process.execPath, [join(here, "capture-figure.mjs"), html, output], { stdio: "inherit" });
 if (capture.status !== 0) process.exit(capture.status ?? 1);
 console.log(`원본: ${join(figureDir, `${name}.raw.png`)}\n완성: ${output}`);

@@ -1,19 +1,45 @@
 #!/usr/bin/env node
 // 원고 마크다운의 코드 블록에서 들여쓰기, 공백, 따옴표, 세미콜론을 검사한다.
-// 사용법: node check-code.mjs <원고.md> [--json]
+// 사용법: node check-code.mjs <원고.md> [--indent=2|4] [--json]
 // 규칙 이름 끝에 ?가 붙은 항목은 "확인 필요"(추정)다.
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
 
 const args = process.argv.slice(2);
 const file = args.find((arg) => !arg.startsWith("--"));
 const asJson = args.includes("--json");
+const indentArg = args.find((arg) => arg.startsWith("--indent="));
 
 if (!file) {
-  console.error("사용법: node check-code.mjs <원고.md> [--json]");
+  console.error("사용법: node check-code.mjs <원고.md> [--indent=2|4] [--json]");
   process.exit(2);
 }
 
 const lines = readFileSync(file, "utf8").replace(/\r\n/g, "\n").split("\n");
+const indentUnit = indentArg ? Number(indentArg.slice("--indent=".length)) : courseIndent(file);
+if (![2, 4].includes(indentUnit)) {
+  console.error("들여쓰기 값은 2 또는 4입니다. --indent=2 또는 --indent=4를 사용하세요.");
+  process.exit(2);
+}
+
+function courseIndent(input) {
+  let current = dirname(resolve(input));
+  let course = null;
+  while (true) {
+    const name = current.split(/[\\/]/).pop();
+    if (/^book\d*$/.test(name)) course = `.${name}`;
+    if (course) {
+      const setup = join(current, course, "manuscript", "course-setup.md");
+      if (existsSync(setup)) {
+        const match = readFileSync(setup, "utf8").match(/들여쓰기(?:는)?\s*(2|4)칸/);
+        return match ? Number(match[1]) : 2;
+      }
+    }
+    const parent = dirname(current);
+    if (parent === current) return 2;
+    current = parent;
+  }
+}
 
 const JS_LANGS = new Set(["javascript", "js", "mjs", "cjs"]);
 const HTML_LANGS = new Set(["html", "htm"]);
@@ -147,7 +173,7 @@ function maskJs(line, state) {
 const OPERATOR = /===|!==|\*\*=|\*\*|==|!=|<=|>=|=>|&&|\|\||\?\?|\+\+|--|\+=|-=|\*=|\/=|%=|=|\+|-|\*|\/|%|<|>/g;
 const ARITHMETIC = new Set(["+", "-", "*", "/", "%", "**", "<", ">"]);
 
-function checkJsLine(masked, raw, nextMasked, endsInTemplate) {
+function checkJsLine(masked, raw, nextMasked, endsInTemplate, checkTerminator = true) {
   const found = [];
   const edits = [];
   const indent = leadingSpaces(masked);
@@ -202,7 +228,7 @@ function checkJsLine(masked, raw, nextMasked, endsInTemplate) {
     edits.push({ pos: indent + match.index, del: match[0].length, ins: " " });
   }
 
-  if (needsSemicolon(code.trim(), (nextMasked ?? "").trim(), endsInTemplate)) {
+  if (checkTerminator && needsSemicolon(code.trim(), (nextMasked ?? "").trim(), endsInTemplate)) {
     found.push("SEMICOLON");
     edits.push({ pos: code.length, del: 0, ins: ";" });
   }
@@ -217,7 +243,7 @@ function needsSemicolon(code, next, endsInTemplate) {
   if (/^(if|for|while|else|switch|function|class|try|catch|finally|do)\b/.test(code)) return false;
   if (/^}\s*(else|catch|finally|while)\b/.test(code)) return false;
   if (/^["'\w$]+\s*:/.test(code)) return false;
-  if (/^[.?:]/.test(next) || /^[\]]/.test(next)) return false;
+  if (/^[.?:]/.test(next) || /^[)\]]/.test(next)) return false;
   if (/^(&&|\|\||\?\?|[+\-*/%])/.test(next)) return false;
   return true;
 }
@@ -297,13 +323,13 @@ function checkBlock(block, kind) {
     let edits = [];
     const singles = masks[index]?.singles ?? [];
     const indent = raw.match(/^[ \t]*/)[0];
-    const relativeIndent = Math.max(0, indent.replace(/\t/g, "  ").length - commonIndent);
+    const relativeIndent = Math.max(0, indent.replace(/\t/g, " ".repeat(indentUnit)).length - commonIndent);
 
     if (raw.includes("\t")) rules.push("TAB");
 
     const inBlockComment = commentFlags[index] && raw.trim().startsWith("*");
-    if (!inBlockComment && relativeIndent % 2 !== 0) rules.push("INDENT_UNIT");
-    if (!inBlockComment && previousIndent !== null && relativeIndent - previousIndent > 2) {
+    if (!inBlockComment && relativeIndent % indentUnit !== 0) rules.push("INDENT_UNIT");
+    if (!inBlockComment && previousIndent !== null && relativeIndent - previousIndent > indentUnit) {
       rules.push("INDENT_JUMP");
     }
     previousIndent = relativeIndent;
@@ -313,7 +339,7 @@ function checkBlock(block, kind) {
     if (scriptFlags[index] && !templateFlags[index]) {
       const nextIndex = block.body.findIndex((line, k) => k > index && line.trim());
       const nextMasked = nextIndex >= 0 && masks[nextIndex] ? masks[nextIndex].masked : "";
-      const result = checkJsLine(masks[index].masked, raw, nextMasked, masks[index].endsInTemplate);
+      const result = checkJsLine(masks[index].masked, raw, nextMasked, masks[index].endsInTemplate, kind !== "기본 문법");
       rules.push(...result.found);
       edits = result.edits;
 
@@ -330,7 +356,7 @@ function checkBlock(block, kind) {
     if (!rules.length) return;
 
     let fix = applyEdits(raw, edits).replace(/[ \t]+$/, "");
-    fix = fix.replace(/^\t+/, (tabs) => "  ".repeat(tabs.length)).replace(/\t/g, " ");
+    fix = fix.replace(/^\t+/, (tabs) => " ".repeat(indentUnit * tabs.length)).replace(/\t/g, " ");
     fix = fix.slice(Math.min(commonIndent, leadingSpaces(fix)));
 
     findings.push({
@@ -358,7 +384,7 @@ for (const block of blocks) {
 findings.sort((a, b) => a.line - b.line);
 
 if (asJson) {
-  console.log(JSON.stringify({ file, counts, findings }, null, 2));
+  console.log(JSON.stringify({ file, indentUnit, counts, findings }, null, 2));
 } else {
   console.log(`# 코드 검사: ${file}\n`);
   console.log(
