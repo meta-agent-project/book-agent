@@ -41,6 +41,8 @@
 - 출력은 `docs/{원고폴더 이름}-preview/`처럼 과정별로 나누고 course-setup의 지정 경로가 있으면 그것을 따른다. 다른 과정의 비교 HTML을 덮어쓰지 않는다. 이 프로젝트의 JavaScript 비교 구현 `docs/book-style-comparison/`은 참고할 수 있지만 book2 경로와 상태표를 자동으로 대신하지 않는다.
 - 원고·표·코드·결과 이미지·Mermaid를 모두 표시한다. Mermaid는 book-mermaid의 웹 렌더러와 디자인을 사용하고 원고의 코드 블록은 유지한다. PNG/SVG 파일 내보내기는 명시적으로 요청한 경우에만 한다. 웹 화면의 인라인 도식은 허용한다.
 - Markdown 처리와 도표 추출은 LF·CRLF를 모두 인식한다. 원고의 Mermaid 블록 수·내용을 렌더링된 도표와 대조한다. 비교 화면은 양쪽을 각각 확인한다. HTML 생성 시 누락·오래된 도표를 오류로 처리한다.
+- HTML 생성 후 `node .claude/skills/book-manuscript/scripts/update-preview-images.mjs {검토.html}`을 실행한다. 이 명령은 `assets/preview-images.css`와 `assets/preview-images.js`를 중복 없이 포함한다. 화면 표시 크기는 최대 560×280px이며 이미지 확대 보기와 키보드 조작을 제공한다.
+- `node .claude/skills/book-review/scripts/check-visuals.mjs {원고폴더}`로 미완성 자리·파일 누락·이유 없는 텍스트 시각자료를 검사한다.
 - 실제 브라우저에서 모든 대상 장의 도표 수·표시 크기·라벨·이미지 로드·코드 표시·스크롤을 확인한다. SVG 태그가 존재하는 것만으로 렌더링 성공을 판정하지 않는다. 불가피하게 확인하지 못한 항목은 보고하고 검증 완료로 기록하지 않는다.
 
 ## 완료 보고

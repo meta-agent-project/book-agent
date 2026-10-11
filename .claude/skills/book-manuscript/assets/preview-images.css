@@ -1,0 +1,10 @@
+/* 저장 해상도와 읽기용 표시 크기를 분리한다. */
+figure{margin:14px 0}
+figure img{display:block;width:auto;height:auto;max-width:min(100%,560px);max-height:280px;object-fit:contain;margin:0 auto;cursor:zoom-in}
+figure img:focus-visible{outline:2px solid #111;outline-offset:4px}
+figure figcaption{text-align:center}
+.book-image-dialog{padding:16px;border:1px solid #d9d9d9;border-radius:8px;max-width:96vw;max-height:94vh;background:white}
+.book-image-dialog::backdrop{background:rgba(0,0,0,.55)}
+.book-image-dialog header{display:flex;gap:16px;justify-content:space-between;align-items:center;padding:0 0 12px}
+.book-image-dialog img{display:block;max-width:90vw;height:auto;max-height:none}
+.book-image-dialog button{cursor:pointer}

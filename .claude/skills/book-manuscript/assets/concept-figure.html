@@ -1,51 +1,16 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>개념 그림 틀</title>
-  <!--
-    개념 그림 틀. 복사해서 .book/figures/{NN}/{그림 이름}.html로 저장하고 <svg> 안만 바꾼다.
-    스타일 기준: assets/style-ref/의 선 그림(굵기 일정한 검정 외곽선, 흰 배경, 평면 채색)
-    색은 흰색(바탕)과 검정 #111111(선 · 글자)만 쓴다
-    파랑 #3B8FE0(.accent)은 색이 없으면 주인공이 배경에 묻힐 때만 쓰고, 그 이유를 여기에 적는다
-    그림자 · 그라데이션 · 회색 · 다른 색은 쓰지 않는다
-    연한 회색 테두리는 capture-figure.mjs가 캡처할 때 붙이므로 여기에 그리지 않는다
-    캡처: node .claude/skills/book-manuscript/scripts/capture-figure.mjs <이 파일> book/images/{NN}/{그림 이름}.png
-  -->
-  <style>
-    body { margin: 0; background: #ffffff; }
-    #figure { display: block; background: #ffffff; font-family: "Pretendard", "Malgun Gothic", sans-serif; }
-    .line { fill: none; stroke: #111111; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
-    .shape { fill: #ffffff; stroke: #111111; stroke-width: 3; stroke-linejoin: round; }
-    .accent { fill: #3B8FE0; stroke: #111111; stroke-width: 3; stroke-linejoin: round; }
-    .text { fill: #111111; font-size: 18px; }
-    .title { fill: #111111; font-size: 22px; font-weight: 700; }
-    .on-accent { fill: #ffffff; font-size: 22px; font-weight: 700; }
-    .caption { fill: #111111; font-size: 17px; }
-  </style>
-</head>
-<body>
-  <!-- 폭은 760 고정. 높이만 그림에 맞춘다 -->
-  <svg id="figure" width="760" height="300" viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg">
-    <!-- 예시: const 명판이 붙은 객체 상자 -->
-    <rect class="shape" x="40" y="100" width="220" height="96" rx="14"/>
-    <circle class="shape" cx="60" cy="118" r="5"/>
-    <circle class="shape" cx="240" cy="118" r="5"/>
-    <circle class="shape" cx="60" cy="178" r="5"/>
-    <circle class="shape" cx="240" cy="178" r="5"/>
-    <text class="title" x="150" y="156" text-anchor="middle">const member</text>
-    <text class="caption" x="150" y="236" text-anchor="middle">명판은 다른 상자로 옮길 수 없다</text>
-
-    <path class="line" d="M 272 148 L 432 148"/>
-    <path class="line" d="M 418 136 L 434 148 L 418 160"/>
-
-    <rect class="shape" x="450" y="56" width="270" height="190" rx="14"/>
-    <path class="line" d="M 450 98 L 720 98"/>
-    <text class="title" x="585" y="86" text-anchor="middle">객체 상자</text>
-    <text class="text" x="474" y="134">name : "김코딩"</text>
-    <text class="text" x="474" y="172">grade : "실버" → "골드"</text>
-    <text class="text" x="474" y="210">email : 새로 추가</text>
-    <text class="caption" x="585" y="282" text-anchor="middle">상자 안은 바꿀 수 있다</text>
-  </svg>
-</body>
+<!doctype html>
+<html lang="ko"><meta charset="utf-8"><title>개념 그림 빈 틀</title>
+<style>
+body{margin:0;background:#fff}
+#figure{display:block;background:#fff;font-family:Pretendard,"Malgun Gothic",sans-serif}
+.line{fill:none;stroke:#111;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.shape{fill:#fff;stroke:#111;stroke-width:1.5}
+.text,.caption{fill:#111;font-size:16px}
+.title{fill:#111;font-size:18px;font-weight:600}
+.accent{fill:#3B8FE0;stroke:#111;stroke-width:1.5}
+</style>
+<!-- 빈 SVG: 필요한 관계와 라벨만 직접 구성한다. 설명 문장은 원고 본문에 쓴다.
+기본 560×220, 최대 높이 280. 테두리는 capture-figure.mjs가 붙인다.
+색이 학습 내용의 구분에 필요할 때만 accent를 쓰고 이유를 주석에 기록한다. -->
+<svg id="figure" width="560" height="220" viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg"></svg>
 </html>
